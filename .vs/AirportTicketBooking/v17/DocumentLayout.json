@@ -3,8 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\M.T\\Desktop\\projects\\foothill\\practice-projects\\AirportTicketBooking\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2C077B1-FDDE-4876-8797-272EDE7F26A0}|AirportTicketBooking\\AirportTicketBooking.csproj|c:\\users\\m.t\\desktop\\projects\\foothill\\practice-projects\\airportticketbooking\\airportticketbooking\\flight\\flightmodel\\flightmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2C077B1-FDDE-4876-8797-272EDE7F26A0}|AirportTicketBooking\\AirportTicketBooking.csproj|solutionrelative:airportticketbooking\\flight\\flightmodel\\flightmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2C077B1-FDDE-4876-8797-272EDE7F26A0}|AirportTicketBooking\\AirportTicketBooking.csproj|c:\\users\\m.t\\desktop\\projects\\foothill\\practice-projects\\airportticketbooking\\airportticketbooking\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2C077B1-FDDE-4876-8797-272EDE7F26A0}|AirportTicketBooking\\AirportTicketBooking.csproj|solutionrelative:airportticketbooking\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2C077B1-FDDE-4876-8797-272EDE7F26A0}|AirportTicketBooking\\AirportTicketBooking.csproj|c:\\users\\m.t\\desktop\\projects\\foothill\\practice-projects\\airportticketbooking\\airportticketbooking\\flight\\flightrepository\\flights.csv||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2C077B1-FDDE-4876-8797-272EDE7F26A0}|AirportTicketBooking\\AirportTicketBooking.csproj|solutionrelative:airportticketbooking\\flight\\flightrepository\\flights.csv||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -13,18 +21,44 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "DockedWidth": 210,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Flights.csv",
+              "DocumentMoniker": "C:\\Users\\M.T\\Desktop\\projects\\foothill\\practice-projects\\AirportTicketBooking\\AirportTicketBooking\\Flight\\FlightRepository\\Flights.csv",
+              "RelativeDocumentMoniker": "AirportTicketBooking\\Flight\\FlightRepository\\Flights.csv",
+              "ToolTip": "C:\\Users\\M.T\\Desktop\\projects\\foothill\\practice-projects\\AirportTicketBooking\\AirportTicketBooking\\Flight\\FlightRepository\\Flights.csv",
+              "RelativeToolTip": "AirportTicketBooking\\Flight\\FlightRepository\\Flights.csv",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAEAAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002120|",
+              "WhenOpened": "2024-08-31T08:55:31.913Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "FlightModel.cs",
+              "DocumentMoniker": "C:\\Users\\M.T\\Desktop\\projects\\foothill\\practice-projects\\AirportTicketBooking\\AirportTicketBooking\\Flight\\FlightModel\\FlightModel.cs",
+              "RelativeDocumentMoniker": "AirportTicketBooking\\Flight\\FlightModel\\FlightModel.cs",
+              "ToolTip": "C:\\Users\\M.T\\Desktop\\projects\\foothill\\practice-projects\\AirportTicketBooking\\AirportTicketBooking\\Flight\\FlightModel\\FlightModel.cs",
+              "RelativeToolTip": "AirportTicketBooking\\Flight\\FlightModel\\FlightModel.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAABAAAAA7AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-31T08:16:43.159Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\M.T\\Desktop\\projects\\foothill\\practice-projects\\AirportTicketBooking\\AirportTicketBooking\\Program.cs",
               "RelativeDocumentMoniker": "AirportTicketBooking\\Program.cs",
               "ToolTip": "C:\\Users\\M.T\\Desktop\\projects\\foothill\\practice-projects\\AirportTicketBooking\\AirportTicketBooking\\Program.cs",
               "RelativeToolTip": "AirportTicketBooking\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAArAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-31T07:57:04.927Z",
               "EditorCaption": ""
