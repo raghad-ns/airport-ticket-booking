@@ -185,11 +185,16 @@
     <Compile Include="Flight\FlightRepository\FlightRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="User\Manager\ManagerModel\ManagerModel.cs" />
+    <Compile Include="User\Passenger\PassengerModel\PassengerModel.cs" />
+    <Compile Include="User\UserModel.cs" />
+    <Compile Include="User\UserRepository\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Flight\FlightRepository\Flights.csv" />
     <None Include="packages.config" />
+    <None Include="User\UserRepository\Users.csv" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

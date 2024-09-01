@@ -38,10 +38,11 @@ namespace AirportTicketBooking.Flight.FlightRepository
                 {
                     var line = reader.ReadLine();
                     var values = line.Split(',');
-                    Console.WriteLine($"line: {line}");
+                    //Console.WriteLine($"line: {line}");
 
                     var flight = new FlightModel.Flight()
                     {
+                        Id = int.Parse(values[0]),
                         DepartureCountry= (CountryEnum)Enum.Parse(typeof(CountryEnum), values[1]),
                         DestinationCountry= (CountryEnum)Enum.Parse(typeof(CountryEnum), values[2]),
                         Class = (ClassEnum)Enum.Parse(typeof(ClassEnum), values[3]),

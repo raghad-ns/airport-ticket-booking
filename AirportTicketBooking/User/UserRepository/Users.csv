@@ -1,0 +1,9 @@
+Role,Id,First Name,Last Name,Email,Password
+passenger,1,John,Smith,john.smith@gmail.com,123456
+passenger,1,John,Johnson,john.johnson@gmail.com,123456
+manager,1,Emma,Williams,emma.williams@gmail.com,123456
+manager,1,Michael,Brown,michael.brown@gmail.com,123456
+passenger,1,Sophia,Jones,sophia.jones@gmail.com,123456
+passenger,1,David,Garcia,david.garcia@gmail.com,123456
+manager,1,James,Miller,james.miller@gmail.com,123456
+passenger,1,Ava,Davis,ava.davis@gmail.com,123456

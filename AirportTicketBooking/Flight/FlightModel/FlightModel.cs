@@ -12,7 +12,7 @@ namespace AirportTicketBooking.Flight.FlightModel
     public class Flight
     {
         private int count = 1;
-        public int Id { get; private set; }
+        public int Id { get; set; }
         public CountryEnum DepartureCountry { get; set; }
         public CountryEnum DestinationCountry { get; set; }
         public ClassEnum Class { get; set; }
@@ -21,9 +21,11 @@ namespace AirportTicketBooking.Flight.FlightModel
         public AirportEnum DepartureAirport { get; set; }
         public AirportEnum ArrivalAirport { get; set; }
 
-        public Flight()
-        {
-            Id = count++;
-        }
+        //public Flight()
+        //{
+        //    this.Id = count;
+        //    count += 2;
+        //    Console.WriteLine($"id: {count}");
+        //}
     }
 }
