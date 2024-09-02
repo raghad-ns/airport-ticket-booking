@@ -15,13 +15,12 @@ namespace AirportTicketBooking.Flight.Services
             int id,
             string departureCountry,
             string destinationCountry,
-            string flightClass,
+            Dictionary<string, double> flightClass,
             string flightNo,
             DateTime dapartureTime,
             string departureAirport,
             string arrivalAirport)
         {
-            //Console.WriteLine(validateId(id) ? "valid id" : "invalid id");
             return new List<string>();
         }
 

@@ -1,9 +1,9 @@
-Id,DepartureCountry,DestinationCountry,Class,Prices,Flightnumber,DepartureDate,DepartureAirport,ArraivalAirport
-1,Palestine,USA,Bussiness FirstClass Economy,A55,8/29/2024 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport
-2,Palestine,USA,Bussiness,A55,8/29/2024 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport
-3,Palestine,USA,Bussiness Economy,A55,8/29/2024 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport
-4,Palestine,USA,FirstClass Economy,A55,8/29/2024 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport
-5,Palestine,USA,Bussiness,A55,8/29/2024 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport
-6,Palestine,USA,Economy,A55,8/29/2024 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport
-7,Palestine,USA,Bussiness,A55,8/29/2024 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport
-8,Palestine,USA,Bussiness,A55,8/29/2024 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport
+Id,DepartureCountry,DestinationCountry,FirstClassPrice,BussinessClassPrice,EconomicPrice,Flightnumber,DepartureDate,DepartureAirport,ArraivalAirport
+1,Palestine,USA,1500,900,400,A55,8/29/2024 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport
+2,Palestine,USA,,900,,A55,8/29/2024 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport
+3,Palestine,USA,,900,400,A55,8/29/2024 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport
+4,Palestine,USA,1500,,400,A55,8/29/2024 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport
+5,Palestine,USA,,900,,A55,8/29/2024 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport
+6,Palestine,USA,,,400,A55,8/29/2024 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport
+7,Palestine,USA,,900,,A55,8/29/2024 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport
+8,Palestine,USA,1500,900,,A55,8/29/2024 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport

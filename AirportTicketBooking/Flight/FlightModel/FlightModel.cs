@@ -14,7 +14,7 @@ namespace AirportTicketBooking.Flight.FlightModel
         public int Id { get; set; }
         public CountryEnum DepartureCountry { get; set; }
         public CountryEnum DestinationCountry { get; set; }
-        public ClassEnum Class { get; set; }
+        public Dictionary<ClassEnum, double> Class { get; set; }
         public string FlightNo { get; set; }
         public DateTime DepartureDate { get; set; }
         public AirportEnum DepartureAirport { get; set; }
@@ -22,7 +22,27 @@ namespace AirportTicketBooking.Flight.FlightModel
 
         public override string ToString()
         {
-            return $"Flight No: {FlightNo}, departs from {DepartureCountry}, {DepartureAirport}, to {DestinationCountry}, {ArrivalAirport} at {DepartureDate.ToString()}";
+            return $"ID: {Id}: Flight No {FlightNo}, departs from {DepartureCountry}, {DepartureAirport}, to {DestinationCountry}, {ArrivalAirport} at {DepartureDate.ToString()}";
+        }
+
+        public string GetFlightDetails()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine(ToString());
+            stringBuilder.AppendLine(GetFlightClassesAndPrices());
+            return stringBuilder.ToString();
+        }
+
+        public string GetFlightClassesAndPrices()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine("Available classes: ");
+            foreach (KeyValuePair<ClassEnum, double> flightClass in Class)
+            {
+                stringBuilder.AppendLine($"{Enum.GetName(typeof(ClassEnum), flightClass.Key)} => ${flightClass.Value}.");
+            }
+            return stringBuilder.ToString();
+
         }
     }
 }

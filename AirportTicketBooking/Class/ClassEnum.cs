@@ -9,7 +9,7 @@ namespace AirportTicketBooking.Class
     public enum ClassEnum
     {
         Economy,
-        Bussiness,
+        Business,
         FirstClass
     }
 }

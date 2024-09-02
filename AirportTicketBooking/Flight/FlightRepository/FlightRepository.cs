@@ -47,7 +47,6 @@ namespace AirportTicketBooking.Flight.FlightRepository
                         id,
                         departureCountry,
                         destinationCountry,
-                        flightClass,
                         flightNo,
                         departureDate,
                         departureAirport,
@@ -55,34 +54,34 @@ namespace AirportTicketBooking.Flight.FlightRepository
                             int.Parse(values[0]),
                             values[1],
                             values[2],
-                            values[3],
-                            values[4],
-                            DateTime.Parse(values[5]),
                             values[6],
-                            values[7]);
+                            DateTime.Parse(values[7]),
+                            values[8],
+                            values[9]);
 
-                    var flightService = new FlightServices() { ExistedFlights = Flights};
-                    if (flightService.ValidateFlightProperties(id, departureCountry, destinationCountry, flightClass, flightNo, departureDate, departureAirport, arrivalAirport).Count == 0)
+                    Dictionary<string, double> flightClasses = new Dictionary<string, double>();
+                    if (!string.IsNullOrWhiteSpace(values[3])) flightClasses.Add("FirstClass", double.Parse(values[3]));
+                    if (!string.IsNullOrWhiteSpace(values[4])) flightClasses.Add("Business", double.Parse(values[4]));
+                    if (!string.IsNullOrWhiteSpace(values[5])) flightClasses.Add("Economy", double.Parse(values[5]));
+                    var flightService = new FlightServices() { ExistedFlights = Flights };
+                    if (flightService.ValidateFlightProperties(id, departureCountry, destinationCountry, flightClasses, flightNo, departureDate, departureAirport, arrivalAirport).Count == 0)
                     {
-                        //Console.WriteLine("valid flight");
-
-                        List<string> classes = flightClass.Split(' ').ToList();
-                        ClassEnum classEnum = new ClassEnum();
-                        foreach (var c in classes)
+                        Dictionary<ClassEnum, double> classes = new Dictionary<ClassEnum, double>();
+                        foreach (var c in flightClasses)
                         {
-                            ClassEnum className = classEnum | (ClassEnum)Enum.Parse(typeof(ClassEnum), c);
+                            classes.Add((ClassEnum)Enum.Parse(typeof(ClassEnum), c.Key), c.Value);
                         }
 
                         var flight = new FlightModel.Flight()
                         {
-                            Id = int.Parse(values[0]),
-                            DepartureCountry = (CountryEnum)Enum.Parse(typeof(CountryEnum), values[1]),
-                            DestinationCountry = (CountryEnum)Enum.Parse(typeof(CountryEnum), values[2]),
-                            Class = classEnum,
-                            FlightNo = values[4],
-                            DepartureDate = DateTime.Parse(values[5]),
-                            DepartureAirport = (AirportEnum)Enum.Parse(typeof(AirportEnum), values[6]),
-                            ArrivalAirport = (AirportEnum)Enum.Parse(typeof(AirportEnum), values[7]),
+                            Id = id,
+                            DepartureCountry = (CountryEnum)Enum.Parse(typeof(CountryEnum), departureCountry),
+                            DestinationCountry = (CountryEnum)Enum.Parse(typeof(CountryEnum), destinationCountry),
+                            Class = classes,
+                            FlightNo = flightNo,
+                            DepartureDate = departureDate,
+                            DepartureAirport = (AirportEnum)Enum.Parse(typeof(AirportEnum), departureAirport),
+                            ArrivalAirport = (AirportEnum)Enum.Parse(typeof(AirportEnum), arrivalAirport),
                         };
 
                         Flights.Add(flight);
