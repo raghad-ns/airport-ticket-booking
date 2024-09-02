@@ -8,12 +8,13 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>AirportTicketBooking</RootNamespace>
     <AssemblyName>AirportTicketBooking</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -183,8 +184,10 @@
     <Compile Include="Country\CountryEnum.cs" />
     <Compile Include="Flight\FlightModel\FlightModel.cs" />
     <Compile Include="Flight\FlightRepository\FlightRepository.cs" />
+    <Compile Include="Flight\Services\FlightServices.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserInterface\UserInterface.cs" />
     <Compile Include="User\Manager\ManagerModel\ManagerModel.cs" />
     <Compile Include="User\Passenger\PassengerModel\PassengerModel.cs" />
     <Compile Include="User\UserModel.cs" />
@@ -192,6 +195,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="assets\managerFlightsSample.csv" />
     <None Include="Flight\FlightRepository\Flights.csv" />
     <None Include="packages.config" />
     <None Include="User\UserRepository\Users.csv" />

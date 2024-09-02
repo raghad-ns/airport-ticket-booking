@@ -1,0 +1,4 @@
+Id,DepartureCountry,DestinationCountry,Class,Flightnumber,DepartureDate,DepartureAirport,ArraivalAirport
+11,Jordan,France,Bussiness,A55,8/29/2024 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport
+21,Canada,Egypt,Bussiness,A55,8/29/2024 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport
+31,USA,Palestine,Bussiness,A55,8/29/2024 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport
