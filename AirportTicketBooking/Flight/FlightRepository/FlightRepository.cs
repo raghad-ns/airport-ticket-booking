@@ -21,6 +21,8 @@ namespace AirportTicketBooking.Flight.FlightRepository
         public FlightRepository()
         {
             UploadFlights();
+            // Sure that flights data stored in the app file are all valid, so upload feedback cleared from the console
+            Console.Clear();
         }
         public List<FlightModel.Flight> GetFlight()
         {
@@ -64,7 +66,8 @@ namespace AirportTicketBooking.Flight.FlightRepository
                     if (!string.IsNullOrWhiteSpace(values[4])) flightClasses.Add("Business", double.Parse(values[4]));
                     if (!string.IsNullOrWhiteSpace(values[5])) flightClasses.Add("Economy", double.Parse(values[5]));
                     var flightService = new FlightServices() { ExistedFlights = Flights };
-                    if (flightService.ValidateFlightProperties(id, departureCountry, destinationCountry, flightClasses, flightNo, departureDate, departureAirport, arrivalAirport).Count == 0)
+                    string validationResult = flightService.ValidateFlightProperties(id, departureCountry, destinationCountry, flightClasses, flightNo, departureDate, departureAirport, arrivalAirport);
+                    if (validationResult.Count() == 0)
                     {
                         Dictionary<ClassEnum, double> classes = new Dictionary<ClassEnum, double>();
                         foreach (var c in flightClasses)
@@ -85,8 +88,13 @@ namespace AirportTicketBooking.Flight.FlightRepository
                         };
 
                         Flights.Add(flight);
+                        Console.WriteLine($"Flight holding the id: {id} uploaded successfully!");
                     }
-
+                    else
+                    {
+                        Console.WriteLine($"About flight holding the id: {id}");
+                        Console.WriteLine(validationResult);
+                    }
                 }
             }
         }

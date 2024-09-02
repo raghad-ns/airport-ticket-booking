@@ -102,7 +102,6 @@ namespace AirportTicketBooking.UserInterface
                         try
                         {
                             _flights.UploadFlights(path);
-                            Console.WriteLine("Flights uploaded successfully!");
                         }
                         catch (Exception ex) { Console.WriteLine("Cannot upload data, please try again later!"); }
                         break;
