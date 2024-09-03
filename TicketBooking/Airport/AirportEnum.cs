@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AirportTicketBooking.Airport
+namespace TicketBooking.Airport
 {
     public enum AirportEnum
     {

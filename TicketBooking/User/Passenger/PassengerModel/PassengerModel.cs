@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AirportTicketBooking.User.Passenger.PassengerModel
+namespace TicketBooking.User.Passenger.PassengerModel
 {
     public class PassengerModel : UserModel
     {

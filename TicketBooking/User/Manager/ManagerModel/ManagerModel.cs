@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AirportTicketBooking.Class
+namespace TicketBooking.User.Manager.ManagerModel
 {
-    public enum ClassEnum
+    public class ManagerModel: UserModel
     {
-        Economy,
-        Business,
-        FirstClass
     }
 }

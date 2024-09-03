@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using IronXL;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using AirportTicketBooking.Flight.FlightModel;
-using AirportTicketBooking.Country;
-using AirportTicketBooking.Class;
-using AirportTicketBooking.Airport;
-using AirportTicketBooking.Flight.Services;
+using TicketBooking.Flight.FlightModel;
+using TicketBooking.Country;
+using TicketBooking.Class;
+using TicketBooking.Airport;
+using TicketBooking.Flight.Services;
 
-namespace AirportTicketBooking.Flight.FlightRepository
+namespace TicketBooking.Flight.FlightRepository
 {
     public class FlightRepository
     {
@@ -30,12 +29,65 @@ namespace AirportTicketBooking.Flight.FlightRepository
             return Flights;
         }
 
+        public List<Flight.FlightModel.Flight> FilterFlights(
+            double? priceFrom = null,
+            double? priceTo = null,
+            string departureCountry = null,
+            string destinationCountry = null,
+            string departureAirport = null,
+            string arrivalAirport = null,
+            ClassEnum? flightClass = null
+            )
+        {
+            List<Flight.FlightModel.Flight> tempFlights = Flights;
+            if (departureCountry is not null)
+            {
+                tempFlights = tempFlights.Where(flight => flight.DepartureCountry.Equals((CountryEnum)Enum.Parse(typeof(CountryEnum), departureCountry))).ToList();
+            }
+
+            if (destinationCountry is not null)
+            {
+                tempFlights = tempFlights.Where(flight => flight.DestinationCountry.Equals((CountryEnum)Enum.Parse(typeof(CountryEnum), destinationCountry))).ToList();
+            }
+
+            if (departureAirport is not null)
+            {
+                tempFlights = tempFlights.Where(flight => flight.DepartureAirport.Equals((AirportEnum)Enum.Parse(typeof(AirportEnum), departureAirport))).ToList();
+            }
+
+            if (arrivalAirport is not null)
+            {
+                tempFlights = tempFlights.Where(flight => flight.ArrivalAirport.Equals((AirportEnum)Enum.Parse(typeof(AirportEnum), arrivalAirport))).ToList();
+            }
+
+            if (flightClass is not null)
+            {
+                tempFlights = tempFlights
+                    .Where(flight => flight.Class.Any(availableClass => availableClass.Key.Equals(flightClass)))
+                    .ToList();
+            }
+
+            if (priceFrom is not null)
+            {
+                tempFlights = tempFlights.Where(flight => flight.Class.Any(availableClass => availableClass.Value >= priceFrom)).ToList();
+            }
+
+            if (priceTo is not null)
+            {
+                tempFlights = tempFlights.Where(flight => flight.Class.Any(availableClass => availableClass.Value <= priceTo)).ToList();
+            }
+
+            return tempFlights;
+        }
+
+
+
         public List<FlightModel.Flight> GetFlights()
         {
             return Flights;
         }
 
-        public void UploadFlights(string path = "C:\\Users\\M.T\\Desktop\\projects\\foothill\\practice-projects\\AirportTicketBooking\\AirportTicketBooking\\Flight\\FlightRepository\\Flights.csv")
+        public void UploadFlights(string path = "C:\\Users\\M.T\\Desktop\\projects\\foothill\\practice-projects\\AirportTicketBooking\\TicketBooking\\Flight\\FlightRepository\\Flights.csv")
         {
             using (var reader = new StreamReader(path))
             {

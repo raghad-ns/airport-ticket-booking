@@ -1,8 +1,8 @@
-﻿using AirportTicketBooking.Airport;
-using AirportTicketBooking.Class;
-using AirportTicketBooking.Country;
-using AirportTicketBooking.Flight.FlightModel;
-using AirportTicketBooking.User.Manager.ManagerModel;
+﻿using TicketBooking.Airport;
+using TicketBooking.Class;
+using TicketBooking.Country;
+using TicketBooking.Flight.FlightModel;
+using TicketBooking.User.Manager.ManagerModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AirportTicketBooking.User.UserRepository
+namespace TicketBooking.User.UserRepository
 {
     public class UserRepository
     {
@@ -18,7 +18,7 @@ namespace AirportTicketBooking.User.UserRepository
 
         public UserRepository()
         {
-            const string path = "C:\\Users\\M.T\\Desktop\\projects\\foothill\\practice-projects\\AirportTicketBooking\\AirportTicketBooking\\User\\UserRepository\\Users.csv";
+            const string path = "C:\\Users\\M.T\\Desktop\\projects\\foothill\\practice-projects\\AirportTicketBooking\\TicketBooking\\User\\UserRepository\\Users.csv";
             using (var reader = new StreamReader(path))
             {
                 var headerLine = reader.ReadLine();

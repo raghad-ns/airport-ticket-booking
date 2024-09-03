@@ -1,17 +1,17 @@
-﻿using AirportTicketBooking.Airport;
-using AirportTicketBooking.Class;
-using AirportTicketBooking.Country;
+﻿using TicketBooking.Airport;
+using TicketBooking.Class;
+using TicketBooking.Country;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AirportTicketBooking.Flight.Services
+namespace TicketBooking.Flight.Services
 {
     public class FlightServices
     {
-        public List<FlightModel.Flight> ExistedFlights { get; set; }
+        public List<FlightModel.Flight> ExistedFlights { get; init; }
         public string ValidateFlightProperties(
             int id,
             string departureCountry,
