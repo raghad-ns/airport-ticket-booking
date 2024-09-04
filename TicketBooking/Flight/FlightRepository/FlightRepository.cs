@@ -87,6 +87,15 @@ namespace TicketBooking.Flight.FlightRepository
             return Flights;
         }
 
+        public void DisplayFlights()
+        {
+            Console.WriteLine($"Available flights: ");
+            foreach (var flight in Flights)
+            {
+                Console.WriteLine(flight.ToString());
+            }
+        }
+
         public void UploadFlights(string path = "C:\\Users\\M.T\\Desktop\\projects\\foothill\\practice-projects\\AirportTicketBooking\\TicketBooking\\Flight\\FlightRepository\\Flights.csv")
         {
             using (var reader = new StreamReader(path))

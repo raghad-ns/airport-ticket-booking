@@ -79,7 +79,8 @@ namespace TicketBooking.UserInterface
                 switch (option)
                 {
                     case displayBookings:
-                        DisplayPersonalBookings();
+                        Console.WriteLine("Personal bookings: ");
+                        BookingsService.DisplayBookings();
                         break;
                     case modifyBooking:
                         ModifyBookings();
@@ -104,7 +105,7 @@ namespace TicketBooking.UserInterface
 
         public void BookFlight()
         {
-            DisplayFlights();
+            _flights.DisplayFlights();
             Console.WriteLine("Are you looking for specific flight? enter 'y' if yes");
             string choice = Console.ReadLine() ?? string.Empty;
             if (choice.Equals("y", StringComparison.OrdinalIgnoreCase) || choice.Equals("yes", StringComparison.OrdinalIgnoreCase))
@@ -120,7 +121,7 @@ namespace TicketBooking.UserInterface
                 Console.WriteLine("Please choose the suitable class: ");
                 string chosenClass = Console.ReadLine() ?? string.Empty;
                 BookingsService bookingsService = new BookingsService() { Bookings = Passenger.PersonalFlights };
-                bookingsService.AddBooking(flightToBook, (ClassEnum)Enum.Parse(typeof(ClassEnum), chosenClass));
+                bookingsService.AddBooking(flightToBook, (ClassEnum)Enum.Parse(typeof(ClassEnum), chosenClass), Passenger.Id);
                 Console.WriteLine("Chosen flight booked successfully!");
             }
             catch (Exception ex)
@@ -132,7 +133,8 @@ namespace TicketBooking.UserInterface
         // Modification done by upgrading/downgrading flight class
         public void ModifyBookings()
         {
-            DisplayPersonalBookings();
+            Console.WriteLine("Personal bookings: ");
+            BookingsService.DisplayBookings();
             Console.WriteLine("Please enter the id of the flight to be modified: ");
             try
             {
@@ -159,7 +161,8 @@ namespace TicketBooking.UserInterface
 
         public void CancelBooking()
         {
-            DisplayPersonalBookings();
+            Console.WriteLine("Personal bookings: ");
+            BookingsService.DisplayBookings();
             Console.WriteLine("Enter the id to cancel: ");
             try
             {
@@ -173,16 +176,6 @@ namespace TicketBooking.UserInterface
             }
         }
 
-        public void DisplayPersonalBookings()
-        {
-            Console.WriteLine("Personal bookings: ");
-            foreach (var booking in Passenger.PersonalFlights)
-            {
-                Console.WriteLine($"Booking Id: {booking.Id}");
-                Console.WriteLine(booking.Flight.ToString());
-                Console.WriteLine($"Class: {booking.ChosenClass}");
-            }
-        }
 
         public void SearchAvailableFlight()
         {
@@ -226,13 +219,5 @@ namespace TicketBooking.UserInterface
             }
         }
 
-        public void DisplayFlights()
-        {
-            Console.WriteLine($"Available flights: ");
-            foreach (var flight in _flights.FilterFlights())
-            {
-                Console.WriteLine(flight.ToString());
-            }
-        }
     }
 }

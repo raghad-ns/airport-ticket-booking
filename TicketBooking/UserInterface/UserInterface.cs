@@ -30,17 +30,19 @@ namespace TicketBooking.UserInterface
             }
             else if (_user is PassengerModel)
             {
-                PassengerModel passenger = (PassengerModel) _user;
-                PassengerInterface passengerInterface = new PassengerInterface() { 
-                    Passenger = passenger, 
-                    Bookings= passenger.PersonalFlights, 
-                    BookingsService = new BookingsService() { Bookings= passenger.PersonalFlights}
+                PassengerModel passenger = (PassengerModel)_user;
+                PassengerInterface passengerInterface = new PassengerInterface()
+                {
+                    Passenger = passenger,
+                    Bookings = passenger.PersonalFlights,
+                    BookingsService = new BookingsService() { Bookings = passenger.PersonalFlights }
                 };
                 passengerInterface.ShowPassengerOptions();
             }
             else
             {
-                ShowManagerOptions();
+                ManagerInterface managerInterface = new ManagerInterface();
+                managerInterface.ShowManagerOptions();
             }
         }
 
@@ -77,72 +79,10 @@ namespace TicketBooking.UserInterface
                 else if (_user is ManagerModel)
                 {
                     _user = (ManagerModel)_user;
-                    ShowManagerOptions();
+                    ManagerInterface managerInterface = new ManagerInterface();
+                    managerInterface.ShowManagerOptions();
                 }
             }
         }
-
-        
-        public void ShowManagerOptions()
-        {
-            Console.WriteLine("Hello manager!");
-            Console.WriteLine("1. Display available flights.");
-            Console.WriteLine("2. Search for specific flights.");
-            Console.WriteLine("3. Upload new flights' details.");
-            Console.WriteLine("0. Exit.");
-            Console.WriteLine("Choose one option: ");
-            int option = int.Parse(Console.ReadLine() ?? "0");
-
-            const int displayAvailableFlights = 1;
-            const int searchFlight = 2;
-            const int uploadFlights = 3;
-
-            while (option > 0)
-            {
-                switch (option)
-                {
-                    case displayAvailableFlights:
-                        DisplayFlights();
-                        break;
-                    case searchFlight:
-                        Console.WriteLine("search");
-                        break;
-                    case uploadFlights:
-                        string? path = "C:\\Users\\M.T\\Desktop\\projects\\foothill\\practice-projects\\AirportTicketBooking\\TicketBooking\\Flight\\FlightRepository\\Flights.csv";
-                        Console.WriteLine("Please enter the absolute path of the file contains flights' details: ");
-                        path = Console.ReadLine();
-                        try
-                        {
-                            path = path?.Replace("\\", "\\\\");
-                            _flights.UploadFlights(path);
-                        }
-                        catch (Exception ex) { Console.WriteLine("Cannot upload data, please try again later!"); }
-                        break;
-                    default:
-                        Console.WriteLine("Default case");
-                        break;
-
-                }
-                Console.ReadLine();
-                Console.Clear();
-                Console.WriteLine("Hello manager!");
-                Console.WriteLine("1. Display available flights.");
-                Console.WriteLine("2. Search for specific flights.");
-                Console.WriteLine("3. Upload new flights' details.");
-                Console.WriteLine("0. Exit.");
-                Console.WriteLine("Choose one option: ");
-                option = int.Parse(Console.ReadLine() ?? "0");
-            }
-        }
-
-        public void DisplayFlights()
-        {
-            Console.WriteLine($"Available flights: ");
-            foreach (var flight in _flights.FilterFlights())
-            {
-                Console.WriteLine(flight.ToString());
-            }
-        }
-
     }
 }
