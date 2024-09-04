@@ -28,6 +28,7 @@ namespace TicketBooking.User.Passenger.Bookings
 
         public void CancelBooking(int id)
         {
+            BookingsRepository.RemoveBookingFromFile(id);
             Bookings.RemoveAt(id - 1);
         }
 

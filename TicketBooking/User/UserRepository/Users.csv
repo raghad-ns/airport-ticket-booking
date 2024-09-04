@@ -1,9 +1,6 @@
-Role,Id,First Name,Last Name,Email,Password,Flight ID,Flight Class
 passenger,1,John,Smith,john.smith@gmail.com,123456
-,,,,,,4,Economy
-,,,,,,4,FirstClass
+,,,,,,2,4,FirstClass
 passenger,2,John,Johnson,john.johnson@gmail.com,123456
-,,,,,,4,FirstClass
 manager,3,Emma,Williams,emma.williams@gmail.com,123456
 manager,4,Michael,Brown,michael.brown@gmail.com,123456
 passenger,5,Sophia,Jones,sophia.jones@gmail.com,123456
