@@ -32,10 +32,10 @@ namespace TicketBooking.Flight.FlightRepository
         public List<Flight.FlightModel.Flight> FilterFlights(
             double? priceFrom = null,
             double? priceTo = null,
-            string departureCountry = null,
-            string destinationCountry = null,
-            string departureAirport = null,
-            string arrivalAirport = null,
+            string? departureCountry = null,
+            string? destinationCountry = null,
+            string? departureAirport = null,
+            string? arrivalAirport = null,
             ClassEnum? flightClass = null
             )
         {

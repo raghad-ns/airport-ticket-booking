@@ -22,7 +22,7 @@ namespace TicketBooking.Flight.FlightModel
 
         public override string ToString()
         {
-            return $"ID: {Id}: Flight No {FlightNo}, departs from {DepartureCountry}, {DepartureAirport}, to {DestinationCountry}, {ArrivalAirport} at {DepartureDate.ToString()}";
+            return $"Flight ID: {Id}: Flight No {FlightNo}, departs from {DepartureCountry}, {DepartureAirport}, to {DestinationCountry}, {ArrivalAirport} at {DepartureDate.ToString()}";
         }
 
         public string GetFlightDetails()
