@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TicketBooking.Airport
+namespace TicketBooking.Airport;
+
+public enum AirportEnum
 {
-    public enum AirportEnum
-    {
-        QueenAliaInternationalAirport
-    }
+    QueenAliaInternationalAirport
 }

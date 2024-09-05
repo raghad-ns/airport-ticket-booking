@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TicketBooking.Class
+namespace TicketBooking.Class;
+
+public enum ClassEnum
 {
-    public enum ClassEnum
-    {
-        Economy,
-        Business,
-        FirstClass
-    }
+    Economy = 1,
+    Business = 2,
+    FirstClass = 3
 }

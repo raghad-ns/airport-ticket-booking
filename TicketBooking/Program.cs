@@ -1,13 +1,12 @@
 ﻿using TicketBooking.UserInterface;
 
-namespace TicketBooking
+namespace TicketBooking;
+
+internal class Program
 {
-    internal class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            UserInterface.UserInterface userInterface = new UserInterface.UserInterface();
-            userInterface.ShowInitialMenu();
-        }
+        UserInterface.UserInterface userInterface = new UserInterface.UserInterface();
+        userInterface.ShowInitialMenu();
     }
 }
