@@ -10,6 +10,7 @@ using TicketBooking.Country;
 using TicketBooking.Class;
 using TicketBooking.Airport;
 using TicketBooking.Flight.Services;
+using TicketBooking.AppSettings;
 
 namespace TicketBooking.Flight.FlightRepository;
 
@@ -92,8 +93,9 @@ public class FlightRepository
         }
     }
 
-    public void LoadFlights(string path = "C:\\Users\\M.T\\Desktop\\projects\\foothill\\practice-projects\\AirportTicketBooking\\TicketBooking\\Flight\\FlightRepository\\Flights.csv")
+    public void LoadFlights(string? path = null)
     {
+        if (path is null) path = AppSettingsInitializer.AppSettingsInstance.FlightsRepoPath;
         using (var reader = new StreamReader(path))
         {
             var headerLine = reader.ReadLine();

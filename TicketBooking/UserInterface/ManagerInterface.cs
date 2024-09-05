@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TicketBooking.AppSettings;
 using TicketBooking.Class;
 using TicketBooking.Flight.FlightModel;
 using TicketBooking.Flight.FlightRepository;
@@ -82,8 +83,9 @@ public class ManagerInterface
 
     public void UploadFlights()
     {
-        string? path = "C:\\Users\\M.T\\Desktop\\projects\\foothill\\practice-projects\\AirportTicketBooking\\TicketBooking\\Flight\\FlightRepository\\Flights.csv";
+        string? path = AppSettingsInitializer.AppSettingsInstance.FlightsRepoPath;
         Console.WriteLine("Please enter the absolute path of the file contains flights' details: ");
+        Console.WriteLine(Directory.GetCurrentDirectory());
         path = Console.ReadLine();
 
         try

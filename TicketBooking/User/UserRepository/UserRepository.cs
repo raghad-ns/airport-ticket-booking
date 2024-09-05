@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using TicketBooking.User.Passenger.Bookings;
 using TicketBooking.User.Passenger.PassengerModel;
 using TicketBooking.Flight.FlightRepository;
+using TicketBooking.AppSettings;
 
 namespace TicketBooking.User.UserRepository;
 
@@ -27,7 +28,7 @@ public class UserRepository
 
     private void LoadUsers()
     {
-        const string path = "C:\\Users\\M.T\\Desktop\\projects\\foothill\\practice-projects\\AirportTicketBooking\\TicketBooking\\User\\UserRepository\\Users.csv";
+        string path = AppSettingsInitializer.AppSettingsInstance.UsersRepoPath;
 
         using (var reader = new StreamReader(path))
         {
