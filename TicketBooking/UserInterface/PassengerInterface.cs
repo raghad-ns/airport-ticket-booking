@@ -139,7 +139,7 @@ namespace TicketBooking.UserInterface
             try
             {
                 int id = int.Parse(Console.ReadLine());
-                Console.WriteLine(Bookings[id - 1].Flight.GetFlightClassesAndPrices());
+                Console.WriteLine(Bookings.Single(booking => booking.Id == id).Flight.GetFlightClassesAndPrices());
                 Console.WriteLine("Choose your new class: ");
                 string newClass = Console.ReadLine() ?? string.Empty;
                 if (Enum.IsDefined(typeof(ClassEnum), newClass))

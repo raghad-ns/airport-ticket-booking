@@ -17,23 +17,33 @@ namespace TicketBooking.User.Passenger.Bookings
         // TODO: update it to save booking to the specified file
         public void AddBooking(Flight.FlightModel.Flight flight, ClassEnum flightClass, int userId)
         {
-            Bookings.Add(new BookingsModel()
+            BookingsModel booking = new BookingsModel()
             {
-                Id = Bookings.Count + 1,
+                Id = (int)(DateTime.Now.Subtract(new DateTime(1970, 1, 1))).TotalSeconds,
                 UserId = userId,
                 Flight = flight,
                 ChosenClass = flightClass
-            });
+            };
+            Bookings.Add(booking);
+            BookingsRepository.AddBookingToFile(booking);
         }
 
         public void CancelBooking(int id)
         {
-            Bookings.RemoveAt(id - 1);
+            BookingsRepository.RemoveBookingFromFile(id);
+            BookingsModel? toBeRemoved = Bookings.SingleOrDefault(booking => booking.Id == id);
+            if (toBeRemoved is not null)
+            {
+                Bookings.Remove(toBeRemoved);
+            }
         }
 
         public void UpdateBooking(int id, ClassEnum newClass)
         {
-            Bookings[id - 1].ChosenClass = newClass;
+            // Here I'm intended to get exception raised in case of error or no item holding this Id
+            BookingsModel? toBeModified = Bookings.Find(booking => booking.Id == id);
+            toBeModified.ChosenClass = newClass;
+            BookingsRepository.UpdateBooking(toBeModified);
         }
 
 
