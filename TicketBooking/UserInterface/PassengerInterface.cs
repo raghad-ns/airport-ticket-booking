@@ -155,7 +155,6 @@ namespace TicketBooking.UserInterface
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
                 Console.WriteLine("Cannot modify the selected flight, please check the id you entered!");
             }
         }

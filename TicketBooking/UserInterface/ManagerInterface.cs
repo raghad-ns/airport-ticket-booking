@@ -69,7 +69,7 @@ namespace TicketBooking.UserInterface
                 Console.Clear();
                 Console.WriteLine("Hello manager!");
                 Console.WriteLine("1. Display available flights.");
-                Console.WriteLine("2. Search users' bookings.");
+                Console.WriteLine("2. Display users' bookings.");
                 Console.WriteLine("3. Search users' bookings.");
                 Console.WriteLine("4. Upload new flights' details.");
                 Console.WriteLine("0. Exit.");
