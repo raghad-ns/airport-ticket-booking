@@ -17,13 +17,15 @@ namespace TicketBooking.User.Passenger.Bookings
         // TODO: update it to save booking to the specified file
         public void AddBooking(Flight.FlightModel.Flight flight, ClassEnum flightClass, int userId)
         {
-            Bookings.Add(new BookingsModel()
+            BookingsModel booking = new BookingsModel()
             {
                 Id = Bookings.Count + 1,
                 UserId = userId,
                 Flight = flight,
                 ChosenClass = flightClass
-            });
+            };
+            Bookings.Add(booking);
+            BookingsRepository.AddBookingToFile(booking);
         }
 
         public void CancelBooking(int id)
@@ -35,6 +37,8 @@ namespace TicketBooking.User.Passenger.Bookings
         public void UpdateBooking(int id, ClassEnum newClass)
         {
             Bookings[id - 1].ChosenClass = newClass;
+            BookingsRepository.RemoveBookingFromFile(id);
+            BookingsRepository.AddBookingToFile(Bookings[id - 1]);
         }
 
 

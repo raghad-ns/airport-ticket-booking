@@ -74,7 +74,7 @@ namespace TicketBooking.User.UserRepository
                     {
                         passengerBookings.Add(new BookingsModel()
                         {
-                            Id = passengerBookings.Count + 1,
+                            Id = int.Parse(values[6]),
                             Flight = _flight.Flights.Single(flight => flight.Id == int.Parse(values[7])),
                             ChosenClass = (ClassEnum)Enum.Parse(typeof(ClassEnum), values[8]),
                             UserId = Users.Last().Id
