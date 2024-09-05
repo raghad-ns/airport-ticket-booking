@@ -12,7 +12,13 @@ namespace TicketBooking.User.Passenger.Bookings;
 
 public class BookingsService
 {
-    public List<BookingsModel> Bookings { get; init; }
+    private List<BookingsModel> Bookings { get; init; }
+    public BookingsService(List<BookingsModel> bookings)
+    {
+        Bookings = bookings;
+    }
+
+    public List<BookingsModel> BetBookings() { return Bookings; }
 
     public void AddBooking(Flight.FlightModel.Flight flight, ClassEnum flightClass, int userId)
     {

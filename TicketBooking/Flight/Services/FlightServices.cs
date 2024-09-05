@@ -11,86 +11,50 @@ namespace TicketBooking.Flight.Services;
 
 public class FlightServices
 {
-    public List<FlightModel.Flight> ExistedFlights { get; init; }
-    public string ValidateFlightProperties(
-        int id,
-        string departureCountry,
-        string destinationCountry,
-        Dictionary<string, double> flightClassDict,
-        string flightNo,
-        DateTime departureTime,
-        string departureAirport,
-        string arrivalAirport)
+    private FlightRepository.FlightRepository _flightRepository = new();
+    public List<Flight.FlightModel.Flight> FilterFlights(
+        double? priceFrom = null,
+        double? priceTo = null,
+        string? departureCountry = null,
+        string? destinationCountry = null,
+        string? departureAirport = null,
+        string? arrivalAirport = null,
+        ClassEnum? flightClass = null
+        )
     {
-        StringBuilder sb = new StringBuilder();
-        
-        if (!validateId(id)) sb.AppendLine("Id is invalid are duplicated, should be unique and greater than 0");
-        
-        if (!ValidateCountry(departureCountry)) sb.AppendLine("Departure country is not found");
-        
-        if (!ValidateCountry(destinationCountry)) sb.AppendLine("Destination country is not found");
-        
-        if (!ValidateAirport(departureAirport)) sb.AppendLine("Departure airport is not found");
-        
-        if (!ValidateAirport(arrivalAirport)) sb.AppendLine("Arrival airport is not found");
-        
-        if (!ValidateDepartureTime(departureTime)) sb.AppendLine("Invalid departure time, should be future date");
-        
-        if (!ValidateFlightClass(flightClassDict)) sb.AppendLine("Valid classes are: FirstClass, Business, Economy. Prices should be positive values too");
-        
-        return sb.ToString();
+        return _flightRepository.FilterFlights(
+            priceFrom,
+            priceTo,
+            departureCountry,
+            destinationCountry,
+            departureAirport,
+            arrivalAirport,
+            flightClass
+            );
     }
 
-    public bool validateId(int id)
+    public void LoadFlights(string path)
     {
-        try { return id > 0 && ExistedFlights.Count(flight => flight.Id == id) == 0; }
-        catch { return false; }
+        _flightRepository.LoadFlights(path);
     }
 
-    public bool ValidateCountry(string country)
+    public void DisplayFlights()
     {
-        try
-        {
-            return
-                new List<string>(Enum.GetNames(typeof(CountryEnum)))
-                .SingleOrDefault(existedCountry => existedCountry.Equals(country))
-                .Any();
-        }
-        catch { return false; }
+        FlightPrinter.DisplayFlights(_flightRepository.GetFlights());
     }
 
-    public bool ValidateAirport(string airport)
+    public List<FlightModel.Flight> GetFlights()
     {
-        try
-        {
-            return
-                new List<string>(Enum.GetNames(typeof(AirportEnum)))
-                .SingleOrDefault(existedAirport => existedAirport.Equals(airport))
-                .Any();
-
-        }
-        catch { return false; }
+        return _flightRepository.GetFlights();
     }
 
-    public bool ValidateDepartureTime(DateTime dapartureTime)
+    public string GetFlightClassesAndPrices(FlightModel.Flight flight)
     {
-        return dapartureTime >= DateTime.Now;
+        return FlightPrinter.GetFlightClassesAndPrices(flight);
     }
 
-    public bool ValidateFlightClass(Dictionary<string, double> classes)
+    public string GetFlightDetails(FlightModel.Flight flight)
     {
-        bool valid = true;
-        try
-        {
-            foreach (var flightClass in classes)
-            {
-                // In fact, there is no need for to next line, since classes specified in the code, not from user's input
-                if (!Enum.TryParse(flightClass.Key, out ClassEnum enumValue)) valid = false;
-                if (flightClass.Value <= 0) valid = false;
-            }
-
-        }
-        catch { valid = false; }
-        return valid;
+        return FlightPrinter.GetFlightDetails(flight);
     }
 }

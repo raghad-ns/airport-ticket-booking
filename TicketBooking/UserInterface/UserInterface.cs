@@ -13,14 +13,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TicketBooking.User.Passenger.Bookings;
+using TicketBooking.Flight.Services;
+using TicketBooking.User.UserServices;
 
 namespace TicketBooking.UserInterface;
 
 public class UserInterface
 {
     private UserModel? _user;
-    private UserRepository _userRepository = new UserRepository();
-    private FlightRepository _flights = new FlightRepository();
+    private UserServices _userServices = new ();
     public void ShowInitialMenu()
     {
         if (_user == null)
@@ -35,7 +36,7 @@ public class UserInterface
             {
                 Passenger = passenger,
                 Bookings = passenger.PersonalFlights,
-                BookingsService = new BookingsService() { Bookings = passenger.PersonalFlights }
+                BookingsService = new BookingsService(passenger.PersonalFlights)
             };
 
             passengerInterface.ShowPassengerOptions();
@@ -53,7 +54,7 @@ public class UserInterface
         string? email = Console.ReadLine();
         Console.Write("Password: ");
         string? password = Console.ReadLine();
-        _user = _userRepository.Login(email ?? string.Empty, password ?? string.Empty);
+        _user = _userServices.Login(email ?? string.Empty, password ?? string.Empty);
 
         if (_user is null)
         {
@@ -75,7 +76,7 @@ public class UserInterface
                 {
                     Passenger = passenger,
                     Bookings = passenger.PersonalFlights,
-                    BookingsService = new BookingsService() { Bookings = passenger.PersonalFlights }
+                    BookingsService = new BookingsService(passenger.PersonalFlights)
                 };
                 passengerInterface.ShowPassengerOptions();
             }

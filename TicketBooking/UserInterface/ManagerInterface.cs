@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TicketBooking.Class;
 using TicketBooking.Flight.FlightModel;
 using TicketBooking.Flight.FlightRepository;
+using TicketBooking.Flight.Services;
 using TicketBooking.User.Passenger.Bookings;
 using TicketBooking.User.Passenger.PassengerModel;
 using TicketBooking.User.UserRepository;
@@ -14,8 +15,8 @@ namespace TicketBooking.UserInterface;
 
 public class ManagerInterface
 {
-    FlightRepository _flights = new FlightRepository();
-    List<BookingsModel> _bookings = new List<BookingsModel>();
+    private readonly FlightServices _flightServices = new ();
+    private readonly List<BookingsModel> _bookings = new List<BookingsModel>();
 
     public ManagerInterface()
     {
@@ -52,7 +53,7 @@ public class ManagerInterface
             switch (option)
             {
                 case displayAvailableFlights:
-                    _flights.DisplayFlights();
+                    _flightServices.DisplayFlights();
                     break;
                 case displayBookings:
                     DisplayAllBookings();
@@ -74,7 +75,7 @@ public class ManagerInterface
 
     public void DisplayAllBookings()
     {
-        BookingsService bookingsService = new BookingsService() { Bookings = _bookings };
+        BookingsService bookingsService = new BookingsService(_bookings);
         Console.WriteLine("Users' bookings: ");
         bookingsService.DisplayBookings(displayUserId: true);
     }
@@ -88,7 +89,7 @@ public class ManagerInterface
         try
         {
             path = path?.Replace("\\", "\\\\");
-            _flights.LoadFlights(path);
+            _flightServices.LoadFlights(path);
         }
         catch (Exception ex) { Console.WriteLine("Cannot upload data, please try again later!"); }
     }
@@ -134,7 +135,7 @@ public class ManagerInterface
         userInput = Console.ReadLine();
         ClassEnum? flightClass = string.IsNullOrWhiteSpace(userInput) ? null : (ClassEnum)Enum.Parse(typeof(ClassEnum), userInput);
 
-        BookingsService bookingsService = new BookingsService() { Bookings = _bookings };
+        BookingsService bookingsService = new BookingsService(_bookings);
         Console.WriteLine("Matched flights: ");
 
         foreach (var booking in
@@ -156,5 +157,4 @@ public class ManagerInterface
             Console.WriteLine($"Class: {booking.ChosenClass}");
         }
     }
-
 }

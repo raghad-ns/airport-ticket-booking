@@ -15,7 +15,7 @@ namespace TicketBooking.Flight.FlightRepository;
 
 public class FlightRepository
 {
-    public List<FlightModel.Flight> Flights { get; private set; } = new List<FlightModel.Flight>();
+    private List<FlightModel.Flight> Flights { get; set; } = new List<FlightModel.Flight>();
 
     public FlightRepository()
     {
@@ -23,11 +23,6 @@ public class FlightRepository
 
         // Sure that flights data stored in the app file are all valid, so upload feedback cleared from the console
         Console.Clear();
-    }
-    public List<FlightModel.Flight> GetFlight()
-    {
-        // TODO: filter flights and return matched objects
-        return Flights;
     }
 
     public List<Flight.FlightModel.Flight> FilterFlights(
@@ -131,8 +126,8 @@ public class FlightRepository
 
                 if (!string.IsNullOrWhiteSpace(values[5])) flightClassesDict.Add("Economy", double.Parse(values[5]));
 
-                var flightService = new FlightServices() { ExistedFlights = Flights };
-                string validationResult = flightService.ValidateFlightProperties(
+                var validator = new FlightValidator(Flights);
+                string validationResult = validator.ValidateFlightProperties(
                     id,
                     departureCountry,
                     destinationCountry,

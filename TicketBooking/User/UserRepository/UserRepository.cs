@@ -85,7 +85,7 @@ public class UserRepository
                     passengerBookings.Add(new BookingsModel()
                     {
                         Id = int.Parse(values[6]),
-                        Flight = _flight.Flights.Single(flight => flight.Id == int.Parse(values[7])),
+                        Flight = _flight.GetFlights().Single(flight => flight.Id == int.Parse(values[7])),
                         ChosenClass = (ClassEnum)Enum.Parse(typeof(ClassEnum), values[8]),
                         UserId = Users.Last().Id
                     });

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TicketBooking.Class;
 using TicketBooking.Flight.FlightModel;
 using TicketBooking.Flight.FlightRepository;
+using TicketBooking.Flight.Services;
 using TicketBooking.User.Passenger.Bookings;
 using TicketBooking.User.Passenger.PassengerModel;
 
@@ -16,7 +17,7 @@ public class PassengerInterface
     public PassengerModel Passenger { get; init; }
     public List<BookingsModel> Bookings { get; init; }
     public BookingsService BookingsService { get; init; }
-    public FlightRepository _flights = new FlightRepository();
+    public FlightServices _flightServices = new FlightServices();
 
     public void ShowPassengerOptions()
     {
@@ -97,7 +98,7 @@ public class PassengerInterface
 
     public void BookFlight()
     {
-        _flights.DisplayFlights();
+        _flightServices.DisplayFlights();
         Console.WriteLine("Are you looking for specific flight? enter 'y' if yes");
         string choice = Console.ReadLine() ?? string.Empty;
 
@@ -111,11 +112,11 @@ public class PassengerInterface
 
         try
         {
-            Flight.FlightModel.Flight flightToBook = _flights.Flights.Single(flight => flight.Id == flightToBookId);
-            Console.WriteLine(flightToBook.GetFlightClassesAndPrices());
+            Flight.FlightModel.Flight flightToBook = _flightServices.GetFlights().Single(flight => flight.Id == flightToBookId);
+            Console.WriteLine(_flightServices.GetFlightClassesAndPrices(flightToBook));
             Console.WriteLine("Please choose the suitable class: ");
             string chosenClass = Console.ReadLine() ?? string.Empty;
-            BookingsService bookingsService = new BookingsService() { Bookings = Passenger.PersonalFlights };
+            BookingsService bookingsService = new BookingsService(Passenger.PersonalFlights);
             bookingsService.AddBooking(flightToBook, (ClassEnum)Enum.Parse(typeof(ClassEnum), chosenClass), Passenger.Id);
             Console.WriteLine("Chosen flight booked successfully!");
         }
@@ -135,7 +136,7 @@ public class PassengerInterface
         try
         {
             int id = int.Parse(Console.ReadLine());
-            Console.WriteLine(Bookings.Single(booking => booking.Id == id).Flight.GetFlightClassesAndPrices());
+            Console.WriteLine(_flightServices.GetFlightClassesAndPrices(Bookings.Single(booking => booking.Id == id).Flight));
             Console.WriteLine("Choose your new class: ");
             string newClass = Console.ReadLine() ?? string.Empty;
 
@@ -210,7 +211,7 @@ public class PassengerInterface
         Console.WriteLine("Matched flights: ");
 
         foreach (var flight in
-            _flights.FilterFlights(
+            _flightServices.FilterFlights(
                 priceFrom,
                 priceTo,
                 departureCountry,
@@ -220,7 +221,7 @@ public class PassengerInterface
                 flightClass)
             )
         {
-            Console.WriteLine(flight.GetFlightDetails());
+            Console.WriteLine(_flightServices.GetFlightDetails(flight));
         }
     }
 }

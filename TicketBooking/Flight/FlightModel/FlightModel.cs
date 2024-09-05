@@ -24,25 +24,4 @@ public class Flight
     {
         return $"Flight ID: {Id}: Flight No {FlightNo}, departs from {DepartureCountry}, {DepartureAirport}, to {DestinationCountry}, {ArrivalAirport} at {DepartureDate.ToString()}";
     }
-
-    public string GetFlightDetails()
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.AppendLine(ToString());
-        stringBuilder.AppendLine(GetFlightClassesAndPrices());
-        return stringBuilder.ToString();
-    }
-
-    public string GetFlightClassesAndPrices()
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.AppendLine("Available classes: ");
-
-        foreach (KeyValuePair<ClassEnum, double> flightClass in Class)
-        {
-            stringBuilder.AppendLine($"{Enum.GetName(typeof(ClassEnum), flightClass.Key)} => ${flightClass.Value}.");
-        }
-
-        return stringBuilder.ToString();
-    }
 }
