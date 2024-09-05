@@ -19,7 +19,7 @@ namespace TicketBooking.User.Passenger.Bookings
         {
             BookingsModel booking = new BookingsModel()
             {
-                Id = Bookings.Count + 1,
+                Id = (int)(DateTime.Now.Subtract(new DateTime(1970, 1, 1))).TotalSeconds,
                 UserId = userId,
                 Flight = flight,
                 ChosenClass = flightClass
@@ -31,14 +31,19 @@ namespace TicketBooking.User.Passenger.Bookings
         public void CancelBooking(int id)
         {
             BookingsRepository.RemoveBookingFromFile(id);
-            Bookings.RemoveAt(id - 1);
+            BookingsModel? toBeRemoved = Bookings.SingleOrDefault(booking => booking.Id == id);
+            if (toBeRemoved is not null)
+            {
+                Bookings.Remove(toBeRemoved);
+            }
         }
 
         public void UpdateBooking(int id, ClassEnum newClass)
         {
-            Bookings[id - 1].ChosenClass = newClass;
-            BookingsRepository.RemoveBookingFromFile(id);
-            BookingsRepository.AddBookingToFile(Bookings[id - 1]);
+            // Here I'm intended to get exception raised in case of error or no item holding this Id
+            BookingsModel? toBeModified = Bookings.Find(booking => booking.Id == id);
+            toBeModified.ChosenClass = newClass;
+            BookingsRepository.UpdateBooking(toBeModified);
         }
 
 

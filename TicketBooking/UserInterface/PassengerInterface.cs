@@ -139,7 +139,7 @@ namespace TicketBooking.UserInterface
             try
             {
                 int id = int.Parse(Console.ReadLine());
-                Console.WriteLine(Bookings[id - 1].Flight.GetFlightClassesAndPrices());
+                Console.WriteLine(Bookings.Single(booking => booking.Id == id).Flight.GetFlightClassesAndPrices());
                 Console.WriteLine("Choose your new class: ");
                 string newClass = Console.ReadLine() ?? string.Empty;
                 if (Enum.IsDefined(typeof(ClassEnum), newClass))
@@ -155,6 +155,7 @@ namespace TicketBooking.UserInterface
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 Console.WriteLine("Cannot modify the selected flight, please check the id you entered!");
             }
         }

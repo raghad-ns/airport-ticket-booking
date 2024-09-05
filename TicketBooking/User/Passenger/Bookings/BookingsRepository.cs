@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TicketBooking.Class;
 
 namespace TicketBooking.User.Passenger.Bookings
 {
@@ -50,8 +51,26 @@ namespace TicketBooking.User.Passenger.Bookings
             int.Parse(line.Split(',')[6]) != id)
                 .ToList();
 
-            lines.Insert(0,headers);
+            lines.Insert(0, headers);
             File.WriteAllLines(filePath, lines);
+        }
+        public static void UpdateBooking(BookingsModel newBooking)
+        {
+            List<string> lines = new List<string>();
+
+            lines.AddRange(File.ReadAllLines(filePath));
+            string headers = lines[0];
+            lines.RemoveAt(0);
+
+            int index = lines.FindIndex(line => line.Split(',').Length > 6 && int.Parse(line.Split(",")[6]) == newBooking.Id);
+            string[] values = lines[index].Split(",");
+            values[8] = Enum.GetName(typeof(ClassEnum), newBooking.ChosenClass);
+            lines[index] = string.Join(",", values);
+
+            lines.Insert(0, headers);
+
+            File.WriteAllLines(filePath, lines);
+
         }
     }
 }
