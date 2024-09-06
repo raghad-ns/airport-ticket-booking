@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TicketBooking.AppSettings;
 using TicketBooking.Class;
 
 namespace TicketBooking.User.Passenger.Bookings;
@@ -10,7 +11,7 @@ namespace TicketBooking.User.Passenger.Bookings;
 public class BookingsRepository
 {
     //public List<BookingsModel> Bookings { get; set; }
-    private static string filePath = "C:\\Users\\M.T\\Desktop\\projects\\foothill\\practice-projects\\AirportTicketBooking\\TicketBooking\\User\\UserRepository\\Users.csv";
+    private static string filePath = AppSettingsInitializer.AppSettingsInstance.UsersRepoPath;
 
     public static void AddBookingToFile(BookingsModel booking)
     {
@@ -25,7 +26,9 @@ public class BookingsRepository
 
         for (int i = 0; i < lines.Count; i++)
         {
-            if (int.Parse(lines[i].Split(',')[1]) == booking.UserId)
+            string id = string.IsNullOrWhiteSpace(lines[i].Split(',')[1]) ? "-1" : lines[i].Split(',')[1];
+
+            if (int.Parse(id) == booking.UserId)
             {
                 insertIndex = i + 1;
                 break;
