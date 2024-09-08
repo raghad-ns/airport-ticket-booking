@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TicketBooking.Class;
+﻿using System.Text;
+using TicketBooking.Classes;
 
-namespace TicketBooking.User.Passenger.Bookings;
+namespace TicketBooking.Users.Passengers.Bookings;
 
 public class BookingsModel
 {
     public int Id { get; set; }
     public int UserId { get; init; }
-    public Flight.FlightModel.Flight Flight { get; set; }
-    public ClassEnum ChosenClass { get; set; }
+    public Flights.Models.Flight Flight { get; set; }
+    public Class ChosenClass { get; set; }
 
     public override string ToString()
     {

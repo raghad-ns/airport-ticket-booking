@@ -1,25 +1,19 @@
-﻿using TicketBooking.Airport;
-using TicketBooking.Class;
-using TicketBooking.Country;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using TicketBooking.Classes;
+using TicketBooking.Flights.Repository;
 
-namespace TicketBooking.Flight.Services;
+namespace TicketBooking.Flights.Services;
 
 public class FlightServices
 {
-    private FlightRepository.FlightRepository _flightRepository = new();
-    public List<Flight.FlightModel.Flight> FilterFlights(
+    private FlightRepository _flightRepository = new();
+    public List<Flights.Models.Flight> FilterFlights(
         double? priceFrom = null,
         double? priceTo = null,
         string? departureCountry = null,
         string? destinationCountry = null,
         string? departureAirport = null,
         string? arrivalAirport = null,
-        ClassEnum? flightClass = null
+        Class? flightClass = null
         )
     {
         return _flightRepository.FilterFlights(
@@ -43,17 +37,17 @@ public class FlightServices
         FlightPrinter.DisplayFlights(_flightRepository.GetFlights());
     }
 
-    public List<FlightModel.Flight> GetFlights()
+    public List<Flights.Models.Flight> GetFlights()
     {
         return _flightRepository.GetFlights();
     }
 
-    public string GetFlightClassesAndPrices(FlightModel.Flight flight)
+    public string GetFlightClassesAndPrices(Flights.Models.Flight flight)
     {
         return FlightPrinter.GetFlightClassesAndPrices(flight);
     }
 
-    public string GetFlightDetails(FlightModel.Flight flight)
+    public string GetFlightDetails(Flights.Models.Flight flight)
     {
         return FlightPrinter.GetFlightDetails(flight);
     }

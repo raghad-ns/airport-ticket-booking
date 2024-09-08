@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TicketBooking.AppSettings;
-using TicketBooking.Class;
-using TicketBooking.Flight.FlightModel;
-using TicketBooking.Flight.FlightRepository;
-using TicketBooking.Flight.Services;
-using TicketBooking.User.Passenger.Bookings;
-using TicketBooking.User.Passenger.PassengerModel;
-using TicketBooking.User.UserRepository;
+﻿using TicketBooking.AppSettings;
+using TicketBooking.Classes;
+using TicketBooking.Flights.Services;
+using TicketBooking.Users.Passengers.Bookings;
+using TicketBooking.Users.Passengers.Models;
+using TicketBooking.Users.Repository;
 
 namespace TicketBooking.UserInterface;
 
@@ -83,7 +76,7 @@ public class ManagerInterface
 
     public void UploadFlights()
     {
-        string? path = AppSettingsInitializer.AppSettingsInstance.FlightsRepoPath;
+        string? path = AppSettingsInitializer.AppSettingsInstance().FlightsRepoPath;
         Console.WriteLine("Please enter the absolute path of the file contains flights' details: ");
         Console.WriteLine(Directory.GetCurrentDirectory());
         path = Console.ReadLine();
@@ -135,7 +128,7 @@ public class ManagerInterface
 
         Console.WriteLine("Class: FirstClass, Business, Economy?");
         userInput = Console.ReadLine();
-        ClassEnum? flightClass = string.IsNullOrWhiteSpace(userInput) ? null : (ClassEnum)Enum.Parse(typeof(ClassEnum), userInput);
+        Class? flightClass = string.IsNullOrWhiteSpace(userInput) ? null : (Class)Enum.Parse(typeof(Class), userInput);
 
         BookingsService bookingsService = new BookingsService(_bookings);
         Console.WriteLine("Matched flights: ");

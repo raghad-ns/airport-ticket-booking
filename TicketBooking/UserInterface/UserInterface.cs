@@ -1,20 +1,8 @@
-﻿using TicketBooking.Airport;
-using TicketBooking.Class;
-using TicketBooking.Country;
-using TicketBooking.Flight.FlightModel;
-using TicketBooking.Flight.FlightRepository;
-using TicketBooking.User;
-using TicketBooking.User.Manager.ManagerModel;
-using TicketBooking.User.Passenger.PassengerModel;
-using TicketBooking.User.UserRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TicketBooking.User.Passenger.Bookings;
-using TicketBooking.Flight.Services;
-using TicketBooking.User.UserServices;
+﻿using TicketBooking.Users.Passengers.Bookings;
+using TicketBooking.Users;
+using TicketBooking.Users.Managers.Models;
+using TicketBooking.Users.Passengers.Models;
+using TicketBooking.Users.Services;
 
 namespace TicketBooking.UserInterface;
 

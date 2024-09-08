@@ -1,6 +1,4 @@
-﻿using TicketBooking.UserInterface;
-
-namespace TicketBooking;
+﻿namespace TicketBooking;
 
 internal class Program
 {

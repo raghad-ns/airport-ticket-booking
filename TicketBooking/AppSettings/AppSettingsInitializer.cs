@@ -1,27 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 
 namespace TicketBooking.AppSettings;
 
-public class AppSettingsInitializer
+public static class AppSettingsInitializer
 {
     private static AppSettingsModel? _appSettings;
 
-    public static AppSettingsModel AppSettingsInstance
+    public static AppSettingsModel AppSettingsInstance()
     {
-        get
+        if (_appSettings is null)
         {
-            if (_appSettings is null)
-            {
-                string json = File.ReadAllText("..\\..\\..\\AppSettings\\appsettings.json");
-                _appSettings = JsonSerializer.Deserialize<AppSettingsModel>(json);
-            }
-
-            return _appSettings;
+            string appSettingsJson = File.ReadAllText(@"..\..\..\AppSettings\appsettings.json");
+            _appSettings = JsonSerializer.Deserialize<AppSettingsModel>(appSettingsJson);
         }
+
+        return _appSettings;
     }
 }

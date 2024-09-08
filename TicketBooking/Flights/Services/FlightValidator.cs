@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TicketBooking.Airport;
-using TicketBooking.Class;
-using TicketBooking.Country;
+﻿using System.Text;
+using TicketBooking.Airports;
+using TicketBooking.Classes;
+using TicketBooking.Countries;
 
-namespace TicketBooking.Flight.Services;
+namespace TicketBooking.Flights.Services;
 
 public class FlightValidator
 {
-    private List<FlightModel.Flight> ExistedFlights { get; init; }
+    private List<Flights.Models.Flight> ExistedFlights { get; init; }
 
-    public FlightValidator(List<FlightModel.Flight> existedFlights)
+    public FlightValidator(List<Flights.Models.Flight> existedFlights)
     {
         ExistedFlights = existedFlights;
     }
@@ -58,7 +54,7 @@ public class FlightValidator
         try
         {
             return
-                new List<string>(Enum.GetNames(typeof(CountryEnum)))
+                new List<string>(Enum.GetNames(typeof(Country)))
                 .SingleOrDefault(existedCountry => existedCountry.Equals(country))
                 .Any();
         }
@@ -70,7 +66,7 @@ public class FlightValidator
         try
         {
             return
-                new List<string>(Enum.GetNames(typeof(AirportEnum)))
+                new List<string>(Enum.GetNames(typeof(Airport)))
                 .SingleOrDefault(existedAirport => existedAirport.Equals(airport))
                 .Any();
 
@@ -91,7 +87,7 @@ public class FlightValidator
             foreach (var flightClass in classes)
             {
                 // In fact, there is no need for to next line, since classes specified in the code, not from user's input
-                if (!Enum.TryParse(flightClass.Key, out ClassEnum enumValue)) valid = false;
+                if (!Enum.TryParse(flightClass.Key, out Class enumValue)) valid = false;
                 if (flightClass.Value <= 0) valid = false;
             }
 

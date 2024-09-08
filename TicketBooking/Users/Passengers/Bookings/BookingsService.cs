@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TicketBooking.Airport;
-using TicketBooking.Class;
-using TicketBooking.Country;
-using TicketBooking.Flight.FlightModel;
+﻿using TicketBooking.Airports;
+using TicketBooking.Classes;
+using TicketBooking.Countries;
 
-namespace TicketBooking.User.Passenger.Bookings;
+namespace TicketBooking.Users.Passengers.Bookings;
 
 public class BookingsService
 {
@@ -20,11 +14,11 @@ public class BookingsService
 
     public List<BookingsModel> BetBookings() { return Bookings; }
 
-    public void AddBooking(Flight.FlightModel.Flight flight, ClassEnum flightClass, int userId)
+    public void AddBooking(Flights.Models.Flight flight, Class flightClass, int userId)
     {
         BookingsModel booking = new BookingsModel()
         {
-            Id = (int)(DateTime.Now.Subtract(new DateTime(1970, 1, 1))).TotalSeconds,
+            Id = (int)DateTime.Now.Subtract(new DateTime(1970, 1, 1)).TotalSeconds,
             UserId = userId,
             Flight = flight,
             ChosenClass = flightClass
@@ -44,7 +38,7 @@ public class BookingsService
         }
     }
 
-    public void UpdateBooking(int id, ClassEnum newClass)
+    public void UpdateBooking(int id, Class newClass)
     {
         // Here I'm intended to get exception raised in case of error or no item holding this Id
         BookingsModel? toBeModified = Bookings.Find(booking => booking.Id == id);
@@ -70,7 +64,7 @@ public class BookingsService
         string? destinationCountry = null,
         string? departureAirport = null,
         string? arrivalAirport = null,
-        ClassEnum? flightClass = null
+        Class? flightClass = null
         )
     {
         List<BookingsModel> tempBookings = Bookings;
@@ -91,22 +85,22 @@ public class BookingsService
                 .Where(
                 booking =>
                 booking.Flight.DepartureCountry
-                .Equals((CountryEnum)Enum.Parse(typeof(CountryEnum), departureCountry))).ToList();
+                .Equals((Country)Enum.Parse(typeof(Country), departureCountry))).ToList();
         }
 
         if (destinationCountry is not null)
         {
-            tempBookings = tempBookings.Where(booking => booking.Flight.DestinationCountry.Equals((CountryEnum)Enum.Parse(typeof(CountryEnum), destinationCountry))).ToList();
+            tempBookings = tempBookings.Where(booking => booking.Flight.DestinationCountry.Equals((Country)Enum.Parse(typeof(Country), destinationCountry))).ToList();
         }
 
         if (departureAirport is not null)
         {
-            tempBookings = tempBookings.Where(booking => booking.Flight.DepartureAirport.Equals((AirportEnum)Enum.Parse(typeof(AirportEnum), departureAirport))).ToList();
+            tempBookings = tempBookings.Where(booking => booking.Flight.DepartureAirport.Equals((Airport)Enum.Parse(typeof(Airport), departureAirport))).ToList();
         }
 
         if (arrivalAirport is not null)
         {
-            tempBookings = tempBookings.Where(booking => booking.Flight.ArrivalAirport.Equals((AirportEnum)Enum.Parse(typeof(AirportEnum), arrivalAirport))).ToList();
+            tempBookings = tempBookings.Where(booking => booking.Flight.ArrivalAirport.Equals((Airport)Enum.Parse(typeof(Airport), arrivalAirport))).ToList();
         }
 
         if (flightClass is not null)

@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TicketBooking.Class;
-using TicketBooking.Flight.FlightModel;
-using TicketBooking.Flight.FlightRepository;
-using TicketBooking.Flight.Services;
-using TicketBooking.User.Passenger.Bookings;
-using TicketBooking.User.Passenger.PassengerModel;
+﻿using TicketBooking.Classes;
+using TicketBooking.Flights.Services;
+using TicketBooking.Users.Passengers.Bookings;
+using TicketBooking.Users.Passengers.Models;
 
 namespace TicketBooking.UserInterface;
 
@@ -112,12 +105,12 @@ public class PassengerInterface
 
         try
         {
-            Flight.FlightModel.Flight flightToBook = _flightServices.GetFlights().Single(flight => flight.Id == flightToBookId);
+            Flights.Models.Flight flightToBook = _flightServices.GetFlights().Single(flight => flight.Id == flightToBookId);
             Console.WriteLine(_flightServices.GetFlightClassesAndPrices(flightToBook));
             Console.WriteLine("Please choose the suitable class: ");
             string chosenClass = Console.ReadLine() ?? string.Empty;
             BookingsService bookingsService = new BookingsService(Passenger.PersonalFlights);
-            bookingsService.AddBooking(flightToBook, (ClassEnum)Enum.Parse(typeof(ClassEnum), chosenClass), Passenger.Id);
+            bookingsService.AddBooking(flightToBook, (Class)Enum.Parse(typeof(Class), chosenClass), Passenger.Id);
             Console.WriteLine("Chosen flight booked successfully!");
         }
         catch (Exception ex)
@@ -140,9 +133,9 @@ public class PassengerInterface
             Console.WriteLine("Choose your new class: ");
             string newClass = Console.ReadLine() ?? string.Empty;
 
-            if (Enum.IsDefined(typeof(ClassEnum), newClass))
+            if (Enum.IsDefined(typeof(Class), newClass))
             {
-                BookingsService.UpdateBooking(id, (ClassEnum)(Enum.Parse(typeof(ClassEnum), newClass)));
+                BookingsService.UpdateBooking(id, (Class)(Enum.Parse(typeof(Class), newClass)));
                 Console.WriteLine("Flight modified successfully!");
             }
             else
@@ -206,7 +199,7 @@ public class PassengerInterface
 
         Console.WriteLine("Class: 1. First class, 2. Business class, 3. Economy");
         userInput = Console.ReadLine();
-        ClassEnum? flightClass = string.IsNullOrWhiteSpace(userInput) ? null : (ClassEnum)int.Parse(userInput);
+        Class? flightClass = string.IsNullOrWhiteSpace(userInput) ? null : (Class)int.Parse(userInput);
 
         Console.WriteLine("Matched flights: ");
 

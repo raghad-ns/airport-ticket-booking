@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TicketBooking.AppSettings;
-using TicketBooking.Class;
+﻿using TicketBooking.AppSettings;
+using TicketBooking.Classes;
 
-namespace TicketBooking.User.Passenger.Bookings;
+namespace TicketBooking.Users.Passengers.Bookings;
 
 public class BookingsRepository
 {
     //public List<BookingsModel> Bookings { get; set; }
-    private static string filePath = AppSettingsInitializer.AppSettingsInstance.UsersRepoPath;
+    private static string filePath = AppSettingsInitializer.AppSettingsInstance().UsersRepoPath;
 
     public static void AddBookingToFile(BookingsModel booking)
     {
@@ -68,7 +63,7 @@ public class BookingsRepository
 
         int index = lines.FindIndex(line => line.Split(',').Length > 6 && int.Parse(line.Split(",")[6]) == newBooking.Id);
         string[] values = lines[index].Split(",");
-        values[8] = Enum.GetName(typeof(ClassEnum), newBooking.ChosenClass);
+        values[8] = Enum.GetName(typeof(Class), newBooking.ChosenClass);
         lines[index] = string.Join(",", values);
 
         lines.Insert(0, headers);

@@ -1,14 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿namespace TicketBooking.AppSettings;
 
-namespace TicketBooking.AppSettings;
-
-public class AppSettingsModel
-{
-    public string FlightsRepoPath { get; set; }
-    public string UsersRepoPath { get; set; }
-}
+public record AppSettingsModel(string FlightsRepoPath, string UsersRepoPath);

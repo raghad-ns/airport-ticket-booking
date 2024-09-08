@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace TicketBooking.Countries;
 
-namespace TicketBooking.Country;
-
-public enum CountryEnum
+public enum Country
 {
     Palestine = 1,
     USA = 2,
