@@ -9,25 +9,23 @@ namespace TicketBooking.UserInterface;
 
 public class ManagerInterface
 {
-    private readonly FlightServices _flightServices = new ();
+    private readonly FlightServices _flightServices = new();
     private readonly List<BookingsModel> _bookings = new List<BookingsModel>();
+    BookingsService _bookingsService;
 
     public ManagerInterface()
     {
         UserRepository users = new UserRepository();
 
-        foreach (var user in users.Users)
-        {
-            if (user is PassengerModel)
-            {
-                _bookings.AddRange(((PassengerModel)user).PersonalFlights);
-            }
-        }
+        _bookings.AddRange(
+            users.Users.OfType<PassengerModel>()
+            .SelectMany(user => user.PersonalFlights)
+            );
 
+        _bookingsService = new(_bookings);
     }
     public void ShowManagerOptions()
     {
-
         const int displayAvailableFlights = 1;
         const int displayBookings = 2;
         const int searchBooking = 3;
@@ -44,6 +42,7 @@ public class ManagerInterface
             Console.WriteLine("0. Exit.");
             Console.WriteLine("Choose one option: ");
             option = int.Parse(Console.ReadLine() ?? "0");
+
             switch (option)
             {
                 case displayAvailableFlights:
@@ -69,16 +68,14 @@ public class ManagerInterface
 
     public void DisplayAllBookings()
     {
-        BookingsService bookingsService = new BookingsService(_bookings);
         Console.WriteLine("Users' bookings: ");
-        bookingsService.DisplayBookings(displayUserId: true);
+        _bookingsService.DisplayBookings(displayUserId: true);
     }
 
     public void UploadFlights()
     {
         string? path = AppSettingsInitializer.AppSettingsInstance().FlightsRepoPath;
         Console.WriteLine("Please enter the absolute path of the file contains flights' details: ");
-        Console.WriteLine(Directory.GetCurrentDirectory());
         path = Console.ReadLine();
 
         try
@@ -130,11 +127,9 @@ public class ManagerInterface
         userInput = Console.ReadLine();
         Class? flightClass = string.IsNullOrWhiteSpace(userInput) ? null : (Class)Enum.Parse(typeof(Class), userInput);
 
-        BookingsService bookingsService = new BookingsService(_bookings);
         Console.WriteLine("Matched flights: ");
 
-        foreach (var booking in
-            bookingsService.FilterBookings(
+        var filteredBookings = _bookingsService.FilterBookings(
                 passengerId,
                 flightId,
                 priceFrom,
@@ -143,8 +138,9 @@ public class ManagerInterface
                 destinationCountry,
                 departureAirport,
                 arrivalAirport,
-                flightClass)
-            )
+                flightClass);
+
+        foreach (var booking in filteredBookings)
         {
             Console.WriteLine($"Booking Id: {booking.Id}");
             Console.WriteLine($"User Id: {booking.UserId}");

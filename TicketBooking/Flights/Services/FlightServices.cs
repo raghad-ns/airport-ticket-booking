@@ -34,7 +34,7 @@ public class FlightServices
 
     public void DisplayFlights()
     {
-        FlightPrinter.DisplayFlights(_flightRepository.GetFlights());
+        FlightPrinter.DisplayFlights(GetFlights());
     }
 
     public List<Flights.Models.Flight> GetFlights()
@@ -42,12 +42,12 @@ public class FlightServices
         return _flightRepository.GetFlights();
     }
 
-    public string GetFlightClassesAndPrices(Flights.Models.Flight flight)
+    public string GetFlightClassesAndPricesForDisplay(Flights.Models.Flight flight)
     {
         return FlightPrinter.GetFlightClassesAndPrices(flight);
     }
 
-    public string GetFlightDetails(Flights.Models.Flight flight)
+    public string GetFlightDetailsForDisplay(Flights.Models.Flight flight)
     {
         return FlightPrinter.GetFlightDetails(flight);
     }

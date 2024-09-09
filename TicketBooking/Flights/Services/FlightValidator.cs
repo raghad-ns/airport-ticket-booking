@@ -8,11 +8,11 @@ namespace TicketBooking.Flights.Services;
 
 public class FlightValidator
 {
-    private List<Flights.Models.Flight> ExistedFlights { get; init; }
+    private List<Flights.Models.Flight> _flights { get; init; }
 
     public FlightValidator(List<Flights.Models.Flight> existedFlights)
     {
-        ExistedFlights = existedFlights;
+        _flights = existedFlights;
     }
 
     public string ValidateFlightProperties(FlightSerialization flight)
@@ -47,9 +47,13 @@ public class FlightValidator
 
     public bool validateId(int id)
     {
-        try { return id > 0 && ExistedFlights.Count(flight => flight.Id == id) == 0; }
+        try { return IsValidId(id) && !IsDuplicatedId(id); }
         catch { return false; }
     }
+
+    private bool IsValidId(int id) => id > 0;
+
+    private bool IsDuplicatedId(int id) => _flights.Count(flight => flight.Id == id) > 0;
 
     public bool ValidateCountry(string country)
     {
@@ -71,7 +75,6 @@ public class FlightValidator
                 new List<string>(Enum.GetNames(typeof(Airport)))
                 .SingleOrDefault(existedAirport => existedAirport.Equals(airport))
                 .Any();
-
         }
         catch { return false; }
     }
@@ -95,7 +98,7 @@ public class FlightValidator
 
         }
         catch { valid = false; }
+
         return valid;
     }
-
 }

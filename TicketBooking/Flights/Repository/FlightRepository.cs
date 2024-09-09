@@ -76,16 +76,6 @@ public class FlightRepository
         return Flights;
     }
 
-    public void DisplayFlights()
-    {
-        Console.WriteLine($"Available flights: ");
-
-        foreach (var flight in Flights)
-        {
-            Console.WriteLine(flight.ToString());
-        }
-    }
-
     public void LoadFlights(string? path = null)
     {
         // Assign this value if path is null
@@ -94,31 +84,6 @@ public class FlightRepository
         Console.WriteLine($"records: {lines.Count}");
         foreach (var values in lines)
         {
-            Console.WriteLine("Processing...");
-            //var (
-            //    id,
-            //    departureCountry,
-            //    destinationCountry,
-            //    flightNo,
-            //    departureDate,
-            //    departureAirport,
-            //    arrivalAirport) = (
-            //        int.Parse(values[0]),
-            //        values[1],
-            //        values[2],
-            //        values[6],
-            //        DateTime.Parse(values[7]),
-            //        values[8],
-            //        values[9]);
-
-            //Dictionary<string, double> flightClassesDict = new();
-
-            //if (!string.IsNullOrWhiteSpace(values[3])) flightClassesDict.Add("FirstClass", double.Parse(values[3]));
-
-            //if (!string.IsNullOrWhiteSpace(values[4])) flightClassesDict.Add("Business", double.Parse(values[4]));
-
-            //if (!string.IsNullOrWhiteSpace(values[5])) flightClassesDict.Add("Economy", double.Parse(values[5]));
-
             var DeserializedFlightData = FlightDeserializer.Deserialize(values);
 
             var validator = new FlightValidator(Flights);
@@ -154,6 +119,5 @@ public class FlightRepository
             Flights.Add(flight);
             Console.WriteLine($"Flight holding the id: {DeserializedFlightData.id} uploaded successfully!");
         }
-
     }
 }

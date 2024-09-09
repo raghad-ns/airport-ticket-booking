@@ -24,7 +24,7 @@ public class UserInterface
             {
                 Passenger = passenger,
                 Bookings = passenger.PersonalFlights,
-                BookingsService = new BookingsService(passenger.PersonalFlights)
+                _bookingsService = new BookingsService(passenger.PersonalFlights)
             };
 
             passengerInterface.ShowPassengerOptions();
@@ -40,8 +40,10 @@ public class UserInterface
     {
         Console.Write("Email: ");
         string? email = Console.ReadLine();
+
         Console.Write("Password: ");
         string? password = Console.ReadLine();
+
         _user = _userServices.Login(email ?? string.Empty, password ?? string.Empty);
 
         if (_user is null)
@@ -64,7 +66,7 @@ public class UserInterface
                 {
                     Passenger = passenger,
                     Bookings = passenger.PersonalFlights,
-                    BookingsService = new BookingsService(passenger.PersonalFlights)
+                    _bookingsService = new BookingsService(passenger.PersonalFlights)
                 };
                 passengerInterface.ShowPassengerOptions();
             }

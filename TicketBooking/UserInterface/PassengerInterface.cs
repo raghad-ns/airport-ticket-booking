@@ -9,7 +9,7 @@ public class PassengerInterface
 {
     public PassengerModel Passenger { get; init; }
     public List<BookingsModel> Bookings { get; init; }
-    public BookingsService BookingsService { get; init; }
+    public BookingsService _bookingsService { get; init; }
     public FlightServices _flightServices = new FlightServices();
 
     public void ShowPassengerOptions()
@@ -42,7 +42,6 @@ public class PassengerInterface
                     break;
                 default:
                     break;
-
             }
 
             Console.ReadLine();
@@ -69,10 +68,9 @@ public class PassengerInterface
 
             switch (option)
             {
-
                 case displayBookings:
                     Console.WriteLine("Personal bookings: ");
-                    BookingsService.DisplayBookings();
+                    _bookingsService.DisplayBookings();
                     break;
                 case modifyBooking:
                     ModifyBookings();
@@ -106,11 +104,13 @@ public class PassengerInterface
         try
         {
             Flights.Models.Flight flightToBook = _flightServices.GetFlights().Single(flight => flight.Id == flightToBookId);
-            Console.WriteLine(_flightServices.GetFlightClassesAndPrices(flightToBook));
+
+            Console.WriteLine(_flightServices.GetFlightClassesAndPricesForDisplay(flightToBook));
             Console.WriteLine("Please choose the suitable class: ");
             string chosenClass = Console.ReadLine() ?? string.Empty;
-            BookingsService bookingsService = new BookingsService(Passenger.PersonalFlights);
-            bookingsService.AddBooking(flightToBook, (Class)Enum.Parse(typeof(Class), chosenClass), Passenger.Id);
+
+            _bookingsService.AddBooking(flightToBook, (Class)Enum.Parse(typeof(Class), chosenClass), Passenger.Id);
+
             Console.WriteLine("Chosen flight booked successfully!");
         }
         catch (Exception ex)
@@ -123,26 +123,29 @@ public class PassengerInterface
     public void ModifyBookings()
     {
         Console.WriteLine("Personal bookings: ");
-        BookingsService.DisplayBookings();
+        _bookingsService.DisplayBookings();
         Console.WriteLine("Please enter the id of the flight to be modified: ");
 
         try
         {
             int id = int.Parse(Console.ReadLine());
-            Console.WriteLine(_flightServices.GetFlightClassesAndPrices(Bookings.Single(booking => booking.Id == id).Flight));
+
+            var bookingToModify = (Bookings.Single(booking => booking.Id == id));
+            var flight = bookingToModify.Flight;
+
+            Console.WriteLine(_flightServices.GetFlightClassesAndPricesForDisplay(flight));
             Console.WriteLine("Choose your new class: ");
             string newClass = Console.ReadLine() ?? string.Empty;
 
             if (Enum.IsDefined(typeof(Class), newClass))
             {
-                BookingsService.UpdateBooking(id, (Class)(Enum.Parse(typeof(Class), newClass)));
+                _bookingsService.UpdateBooking(id, (Class)(Enum.Parse(typeof(Class), newClass)));
                 Console.WriteLine("Flight modified successfully!");
             }
             else
             {
                 Console.WriteLine("Incorrect class!");
             }
-
         }
         catch (Exception ex)
         {
@@ -153,13 +156,13 @@ public class PassengerInterface
     public void CancelBooking()
     {
         Console.WriteLine("Personal bookings: ");
-        BookingsService.DisplayBookings();
+        _bookingsService.DisplayBookings();
         Console.WriteLine("Enter the id to cancel: ");
 
         try
         {
             int id = int.Parse(Console.ReadLine() ?? string.Empty);
-            BookingsService.CancelBooking(id);
+            _bookingsService.CancelBooking(id);
             Console.WriteLine("Flight canceled successfully!");
         }
         catch (Exception ex)
@@ -203,18 +206,22 @@ public class PassengerInterface
 
         Console.WriteLine("Matched flights: ");
 
-        foreach (var flight in
-            _flightServices.FilterFlights(
+        var filteredFlights = _flightServices.FilterFlights(
                 priceFrom,
                 priceTo,
                 departureCountry,
                 destinationCountry,
                 departureAirport,
                 arrivalAirport,
-                flightClass)
-            )
+                flightClass);
+
+        var filteredFlightsDetails = filteredFlights
+            .Select(flight => _flightServices.GetFlightDetailsForDisplay(flight))
+            .ToList();
+
+        foreach (var flightDetails in filteredFlightsDetails)
         {
-            Console.WriteLine(_flightServices.GetFlightDetails(flight));
+            Console.WriteLine(flightDetails);
         }
     }
 }
