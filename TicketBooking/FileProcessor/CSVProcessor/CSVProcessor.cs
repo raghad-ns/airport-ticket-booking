@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TicketBooking.FileProcessor.CSVPvocessor;
+namespace TicketBooking.FileProcessor.CSVProcessor;
 
-public class CSVFilesProcessor: IFileLoader
+public class CSVProcessor : IFileLoader
 {
     public static List<string[]> Load(string path)
     {

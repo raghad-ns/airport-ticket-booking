@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TicketBooking.Flights.Models;
 
 namespace TicketBooking.FileProcessor.Deserializer.Flight;
-public class FlightDeserializer : ISerialize
+public class FlightDeserializer : IDeserialize
 {
     public static FlightSerialization Deserialize(string[] flightData)
     {

@@ -5,7 +5,7 @@ namespace TicketBooking.Flights.Services;
 
 public class FlightServices
 {
-    private FlightRepository _flightRepository = new();
+    private FlightRepository _flightRepository = FlightRepository.GetInstance();
     public List<Flights.Models.Flight> FilterFlights(
         double? priceFrom = null,
         double? priceTo = null,

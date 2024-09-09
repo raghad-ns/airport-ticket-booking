@@ -1,9 +1,11 @@
 ﻿using TicketBooking.AppSettings;
 using TicketBooking.Classes;
 using TicketBooking.Flights.Services;
+using TicketBooking.Users;
 using TicketBooking.Users.Passengers.Bookings;
 using TicketBooking.Users.Passengers.Models;
 using TicketBooking.Users.Repository;
+using TicketBooking.Users.Services;
 
 namespace TicketBooking.UserInterface;
 
@@ -15,10 +17,10 @@ public class ManagerInterface
 
     public ManagerInterface()
     {
-        UserRepository users = new UserRepository();
+        List<UserModel> users = (new UserServices()).GetUsers();
 
         _bookings.AddRange(
-            users.Users.OfType<PassengerModel>()
+            users.OfType<PassengerModel>()
             .SelectMany(user => user.PersonalFlights)
             );
 

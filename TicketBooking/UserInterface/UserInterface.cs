@@ -9,7 +9,7 @@ namespace TicketBooking.UserInterface;
 public class UserInterface
 {
     private UserModel? _user;
-    private UserServices _userServices = new ();
+    private UserServices _userServices = new();
     public void ShowInitialMenu()
     {
         if (_user == null)
@@ -20,12 +20,11 @@ public class UserInterface
         else if (_user is PassengerModel)
         {
             PassengerModel passenger = (PassengerModel)_user;
-            PassengerInterface passengerInterface = new PassengerInterface()
-            {
-                Passenger = passenger,
-                Bookings = passenger.PersonalFlights,
-                _bookingsService = new BookingsService(passenger.PersonalFlights)
-            };
+            PassengerInterface passengerInterface = new PassengerInterface(
+                passenger: passenger,
+                bookingsServices: new BookingsService(passenger.PersonalFlights),
+                flightServices: new Flights.Services.FlightServices()
+                );
 
             passengerInterface.ShowPassengerOptions();
         }
@@ -62,12 +61,13 @@ public class UserInterface
             if (_user is PassengerModel)
             {
                 PassengerModel passenger = (PassengerModel)_user;
-                PassengerInterface passengerInterface = new PassengerInterface()
-                {
-                    Passenger = passenger,
-                    Bookings = passenger.PersonalFlights,
-                    _bookingsService = new BookingsService(passenger.PersonalFlights)
-                };
+
+                PassengerInterface passengerInterface = new PassengerInterface(
+                    passenger: passenger,
+                    bookingsServices: new BookingsService(passenger.PersonalFlights),
+                    flightServices: new Flights.Services.FlightServices()
+                );
+
                 passengerInterface.ShowPassengerOptions();
             }
             else if (_user is ManagerModel)

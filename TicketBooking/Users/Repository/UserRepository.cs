@@ -3,8 +3,8 @@ using TicketBooking.AppSettings;
 using TicketBooking.Users.Passengers.Bookings;
 using TicketBooking.Users.Managers.Models;
 using TicketBooking.Users.Passengers.Models;
-using TicketBooking.FileProcessor.CSVPvocessor;
 using TicketBooking.Flights.Services;
+using TicketBooking.FileProcessor.CSVProcessor;
 
 namespace TicketBooking.Users.Repository;
 
@@ -12,16 +12,25 @@ public class UserRepository
 {
     public List<UserModel> Users { get; set; } = new List<UserModel>();
     public FlightServices _flight = new FlightServices();
+    private static UserRepository _instance = new UserRepository();
 
-    public UserRepository()
+    private UserRepository()
     {
         LoadUsers();
     }
 
+    public static UserRepository GetInstance()
+    {
+        _instance ??= new();
+        return _instance;
+    }
+
+    public List<UserModel> GetUsers() => Users;
+
     private void LoadUsers()
     {
         string path = AppSettingsInitializer.AppSettingsInstance().UsersRepoPath;
-        var lines = CSVFilesProcessor.Load(path);
+        var lines = CSVProcessor.Load(path);
         List<BookingsModel> passengerBookings = new List<BookingsModel>();
 
         foreach (var values in lines)

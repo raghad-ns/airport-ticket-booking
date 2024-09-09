@@ -3,21 +3,28 @@ using TicketBooking.Classes;
 using TicketBooking.Airports;
 using TicketBooking.Flights.Services;
 using TicketBooking.AppSettings;
-using TicketBooking.FileProcessor.CSVPvocessor;
 using TicketBooking.FileProcessor.Deserializer.Flight;
+using TicketBooking.FileProcessor.CSVProcessor;
 
 namespace TicketBooking.Flights.Repository;
 
 public class FlightRepository
 {
     private List<Models.Flight> Flights { get; set; } = new List<Models.Flight>();
+    private static FlightRepository _instance = new();
 
-    public FlightRepository()
+    private FlightRepository()
     {
         LoadFlights();
 
         // Sure that flights data stored in the app file are all valid, so upload feedback cleared from the console
         Console.Clear();
+    }
+
+    public static FlightRepository GetInstance()
+    {
+        _instance ??= new();
+        return _instance;
     }
 
     public List<Models.Flight> FilterFlights(
@@ -80,7 +87,7 @@ public class FlightRepository
     {
         // Assign this value if path is null
         path ??= AppSettingsInitializer.AppSettingsInstance().FlightsRepoPath;
-        var lines = CSVFilesProcessor.Load(path);
+        var lines = CSVProcessor.Load(path);
         Console.WriteLine($"records: {lines.Count}");
         foreach (var values in lines)
         {

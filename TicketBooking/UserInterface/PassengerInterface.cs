@@ -12,6 +12,18 @@ public class PassengerInterface
     public BookingsService _bookingsService { get; init; }
     public FlightServices _flightServices = new FlightServices();
 
+    public PassengerInterface(
+        BookingsService bookingsServices,
+        FlightServices flightServices,
+        PassengerModel passenger
+        )
+    {
+        _bookingsService = bookingsServices;
+        _flightServices = flightServices;
+        Passenger = passenger;
+        Bookings = passenger.PersonalFlights;
+    }
+
     public void ShowPassengerOptions()
     {
         int option = 1;

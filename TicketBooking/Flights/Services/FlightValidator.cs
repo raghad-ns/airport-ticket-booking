@@ -55,30 +55,21 @@ public class FlightValidator
 
     private bool IsDuplicatedId(int id) => _flights.Count(flight => flight.Id == id) > 0;
 
-    public bool ValidateCountry(string country)
-    {
-        try
-        {
-            return
-                new List<string>(Enum.GetNames(typeof(Country)))
-                .SingleOrDefault(existedCountry => existedCountry.Equals(country))
-                .Any();
-        }
-        catch { return false; }
-    }
+    public bool ValidateCountry(string country) => Enum.TryParse<Country>(country, out _);
+    // Same functionality could be achieved this way too
+    //public bool ValidateCountry(string country)
+    //{
+    //    try
+    //    {
+    //        return
+    //            new List<string>(Enum.GetNames(typeof(Country)))
+    //            .SingleOrDefault(existedCountry => existedCountry.Equals(country))
+    //            .Any();
+    //    }
+    //    catch { return false; }
+    //}
 
-    public bool ValidateAirport(string airport)
-    {
-        try
-        {
-            return
-                new List<string>(Enum.GetNames(typeof(Airport)))
-                .SingleOrDefault(existedAirport => existedAirport.Equals(airport))
-                .Any();
-        }
-        catch { return false; }
-    }
-
+    public bool ValidateAirport(string airport) => Enum.TryParse<Airport>(airport, out _);
     public bool ValidateDepartureTime(DateTime dapartureTime)
     {
         return dapartureTime >= DateTime.Now;

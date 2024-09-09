@@ -2,17 +2,19 @@
 
 namespace TicketBooking.AppSettings;
 
-public static class AppSettingsInitializer
+public class AppSettingsInitializer
 {
     private static AppSettingsModel? _appSettings;
 
+    private AppSettingsInitializer()
+    {
+        string appSettingsJson = File.ReadAllText(@"..\..\..\AppSettings\appsettings.json");
+        _appSettings = JsonSerializer.Deserialize<AppSettingsModel>(appSettingsJson);
+    }
+
     public static AppSettingsModel AppSettingsInstance()
     {
-        if (_appSettings is null)
-        {
-            string appSettingsJson = File.ReadAllText(@"..\..\..\AppSettings\appsettings.json");
-            _appSettings = JsonSerializer.Deserialize<AppSettingsModel>(appSettingsJson);
-        }
+        if (_appSettings == null) new AppSettingsInitializer();
 
         return _appSettings;
     }
