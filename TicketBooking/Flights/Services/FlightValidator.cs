@@ -2,6 +2,7 @@
 using TicketBooking.Airports;
 using TicketBooking.Classes;
 using TicketBooking.Countries;
+using TicketBooking.FileProcessor.Deserializer.Flight;
 
 namespace TicketBooking.Flights.Services;
 
@@ -14,16 +15,17 @@ public class FlightValidator
         ExistedFlights = existedFlights;
     }
 
-    public string ValidateFlightProperties(
-        int id,
-        string departureCountry,
-        string destinationCountry,
-        Dictionary<string, double> flightClassDict,
-        string flightNo,
-        DateTime departureTime,
-        string departureAirport,
-        string arrivalAirport)
+    public string ValidateFlightProperties(FlightSerialization flight)
     {
+        var (id,
+        departureCountry,
+        destinationCountry,
+        flightNo,
+        flightClassesDict,
+        departureTime,
+        departureAirport,
+        arrivalAirport) = flight;
+
         StringBuilder sb = new StringBuilder();
 
         if (!validateId(id)) sb.AppendLine("Id is invalid are duplicated, should be unique and greater than 0");
@@ -38,7 +40,7 @@ public class FlightValidator
 
         if (!ValidateDepartureTime(departureTime)) sb.AppendLine("Invalid departure time, should be future date");
 
-        if (!ValidateFlightClass(flightClassDict)) sb.AppendLine("Valid classes are: FirstClass, Business, Economy. Prices should be positive values too");
+        if (!ValidateFlightClass(flightClassesDict)) sb.AppendLine("Valid classes are: FirstClass, Business, Economy. Prices should be positive values too");
 
         return sb.ToString();
     }

@@ -3,14 +3,15 @@ using TicketBooking.AppSettings;
 using TicketBooking.Users.Passengers.Bookings;
 using TicketBooking.Users.Managers.Models;
 using TicketBooking.Users.Passengers.Models;
-using TicketBooking.Flights.Repository;
+using TicketBooking.FileProcessor.CSVPvocessor;
+using TicketBooking.Flights.Services;
 
 namespace TicketBooking.Users.Repository;
 
 public class UserRepository
 {
     public List<UserModel> Users { get; set; } = new List<UserModel>();
-    public FlightRepository _flight = new FlightRepository();
+    public FlightServices _flight = new FlightServices();
 
     public UserRepository()
     {
@@ -20,15 +21,11 @@ public class UserRepository
     private void LoadUsers()
     {
         string path = AppSettingsInitializer.AppSettingsInstance().UsersRepoPath;
-
-        using var reader = new StreamReader(path);
-        var headerLine = reader.ReadLine();
+        var lines = CSVFilesProcessor.Load(path);
         List<BookingsModel> passengerBookings = new List<BookingsModel>();
 
-        while (!reader.EndOfStream)
+        foreach (var values in lines)
         {
-            var line = reader.ReadLine();
-            var values = line.Split(',');
             string role = values[0];
             UserModel user = new UserModel();
 

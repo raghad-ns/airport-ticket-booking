@@ -3,6 +3,8 @@ using TicketBooking.Classes;
 using TicketBooking.Airports;
 using TicketBooking.Flights.Services;
 using TicketBooking.AppSettings;
+using TicketBooking.FileProcessor.CSVPvocessor;
+using TicketBooking.FileProcessor.Deserializer.Flight;
 
 namespace TicketBooking.Flights.Repository;
 
@@ -88,80 +90,69 @@ public class FlightRepository
     {
         // Assign this value if path is null
         path ??= AppSettingsInitializer.AppSettingsInstance().FlightsRepoPath;
-
-        using var reader = new StreamReader(path);
-
-        // Read header line, no processing required
-        reader.ReadLine();
-
-        while (!reader.EndOfStream)
+        var lines = CSVFilesProcessor.Load(path);
+        Console.WriteLine($"records: {lines.Count}");
+        foreach (var values in lines)
         {
-            var line = reader.ReadLine();
-            var values = line.Split(',');
-            var (
-                id,
-                departureCountry,
-                destinationCountry,
-                flightNo,
-                departureDate,
-                departureAirport,
-                arrivalAirport) = (
-                    int.Parse(values[0]),
-                    values[1],
-                    values[2],
-                    values[6],
-                    DateTime.Parse(values[7]),
-                    values[8],
-                    values[9]);
+            Console.WriteLine("Processing...");
+            //var (
+            //    id,
+            //    departureCountry,
+            //    destinationCountry,
+            //    flightNo,
+            //    departureDate,
+            //    departureAirport,
+            //    arrivalAirport) = (
+            //        int.Parse(values[0]),
+            //        values[1],
+            //        values[2],
+            //        values[6],
+            //        DateTime.Parse(values[7]),
+            //        values[8],
+            //        values[9]);
 
-            Dictionary<string, double> flightClassesDict = new();
+            //Dictionary<string, double> flightClassesDict = new();
 
-            if (!string.IsNullOrWhiteSpace(values[3])) flightClassesDict.Add("FirstClass", double.Parse(values[3]));
+            //if (!string.IsNullOrWhiteSpace(values[3])) flightClassesDict.Add("FirstClass", double.Parse(values[3]));
 
-            if (!string.IsNullOrWhiteSpace(values[4])) flightClassesDict.Add("Business", double.Parse(values[4]));
+            //if (!string.IsNullOrWhiteSpace(values[4])) flightClassesDict.Add("Business", double.Parse(values[4]));
 
-            if (!string.IsNullOrWhiteSpace(values[5])) flightClassesDict.Add("Economy", double.Parse(values[5]));
+            //if (!string.IsNullOrWhiteSpace(values[5])) flightClassesDict.Add("Economy", double.Parse(values[5]));
+
+            var DeserializedFlightData = FlightDeserializer.Deserialize(values);
 
             var validator = new FlightValidator(Flights);
-            string validationResult = validator.ValidateFlightProperties(
-                id,
-                departureCountry,
-                destinationCountry,
-                flightClassesDict,
-                flightNo,
-                departureDate,
-                departureAirport,
-                arrivalAirport);
+            string validationResult = validator.ValidateFlightProperties(DeserializedFlightData);
 
             // If flight's data holding invalid values
             if (validationResult.Length > 0)
             {
-                Console.WriteLine($"About flight holding the id: {id}");
+                Console.WriteLine($"About flight holding the id: {DeserializedFlightData.id}");
                 Console.WriteLine(validationResult);
-                return;
+                continue;
             }
 
             Dictionary<Class, double> classesDict = new Dictionary<Class, double>();
 
-            foreach (var c in flightClassesDict)
+            foreach (var c in DeserializedFlightData.flightClassesDict)
             {
                 classesDict.Add((Class)Enum.Parse(typeof(Class), c.Key), c.Value);
             }
 
             var flight = new Models.Flight()
             {
-                Id = id,
-                DepartureCountry = (Country)Enum.Parse(typeof(Country), departureCountry),
-                DestinationCountry = (Country)Enum.Parse(typeof(Country), destinationCountry),
+                Id = DeserializedFlightData.id,
+                DepartureCountry = (Country)Enum.Parse(typeof(Country), DeserializedFlightData.departureCountry),
+                DestinationCountry = (Country)Enum.Parse(typeof(Country), DeserializedFlightData.destinationCountry),
                 Class = classesDict,
-                FlightNo = flightNo,
-                DepartureDate = departureDate,
-                DepartureAirport = (Airport)Enum.Parse(typeof(Airport), departureAirport),
-                ArrivalAirport = (Airport)Enum.Parse(typeof(Airport), arrivalAirport),
+                FlightNo = DeserializedFlightData.flightNo,
+                DepartureDate = DeserializedFlightData.departureDate,
+                DepartureAirport = (Airport)Enum.Parse(typeof(Airport), DeserializedFlightData.departureAirport),
+                ArrivalAirport = (Airport)Enum.Parse(typeof(Airport), DeserializedFlightData.arrivalAirport),
             };
 
             Flights.Add(flight);
-            Console.WriteLine($"Flight holding the id: {id} uploaded successfully!");
+            Console.WriteLine($"Flight holding the id: {DeserializedFlightData.id} uploaded successfully!");
         }
 
     }
