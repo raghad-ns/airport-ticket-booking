@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TicketBooking.Flights.Models;
 
 namespace TicketBooking.FileProcessor.Deserializer.Flight;
-public class FlightDeserializer : IDeserialize
+public class FlightDeserializer : IDeserialize<FlightSerialization>
 {
     public static FlightSerialization Deserialize(string[] flightData)
     {
@@ -25,7 +25,5 @@ public class FlightDeserializer : IDeserialize
                 DateTime.Parse(flightData[7]),
                 flightData[8],
                 flightData[9]);
-
-
     }
 }

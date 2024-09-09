@@ -7,7 +7,7 @@ using TicketBooking.FileProcessor.Deserializer.Flight;
 
 namespace TicketBooking.FileProcessor;
 
-public interface IDeserialize
+public interface IDeserialize<T>
 {
-    public static abstract FlightSerialization Deserialize(string[] values);
+    public static abstract T Deserialize(string[] values);
 }

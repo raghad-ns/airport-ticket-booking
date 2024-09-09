@@ -5,6 +5,7 @@ using TicketBooking.Users.Managers.Models;
 using TicketBooking.Users.Passengers.Models;
 using TicketBooking.Flights.Services;
 using TicketBooking.FileProcessor.CSVProcessor;
+using TicketBooking.FileProcessor.Deserializer.User;
 
 namespace TicketBooking.Users.Repository;
 
@@ -35,8 +36,18 @@ public class UserRepository
 
         foreach (var values in lines)
         {
-            string role = values[0];
             UserModel user = new UserModel();
+            (
+                string? role,
+                int id,
+                string? firstName,
+                string? lastName,
+                string? email,
+                string? password,
+                int? bookingId,
+                int? flightId,
+                string? flightClass
+                ) = UserDeserializer.Deserialize(values);
 
             if (role.Equals("passenger", StringComparison.OrdinalIgnoreCase))
             {
@@ -48,11 +59,11 @@ public class UserRepository
 
                 user = new PassengerModel()
                 {
-                    Id = int.Parse(values[1]),
-                    FirstName = values[2],
-                    LastName = values[3],
-                    Email = values[4],
-                    Password = values[5],
+                    Id = id,
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Email = email,
+                    Password = password,
                     PersonalFlights = new()
                 };
 
@@ -68,11 +79,11 @@ public class UserRepository
 
                 user = new ManagerModel()
                 {
-                    Id = int.Parse(values[1]),
-                    FirstName = values[2],
-                    LastName = values[3],
-                    Email = values[4],
-                    Password = values[5]
+                    Id = id,
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Email = email,
+                    Password = password
                 };
 
                 Users.Add(user);
@@ -81,9 +92,9 @@ public class UserRepository
             {
                 passengerBookings.Add(new BookingsModel()
                 {
-                    Id = int.Parse(values[6]),
-                    Flight = _flight.GetFlights().Single(flight => flight.Id == int.Parse(values[7])),
-                    ChosenClass = (Class)Enum.Parse(typeof(Class), values[8]),
+                    Id = bookingId ?? 0,
+                    Flight = _flight.GetFlights().Single(flight => flight.Id == flightId),
+                    ChosenClass = (Class)Enum.Parse(typeof(Class), flightClass),
                     UserId = Users.Last().Id
                 });
             }
