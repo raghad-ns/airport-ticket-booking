@@ -1,23 +1,22 @@
 ﻿using TicketBooking.AppSettings;
 using TicketBooking.Classes;
+using TicketBooking.Flights.Models;
 using TicketBooking.Flights.Services;
 using TicketBooking.Users;
 using TicketBooking.Users.Passengers.Bookings;
 using TicketBooking.Users.Passengers.Models;
-using TicketBooking.Users.Repository;
-using TicketBooking.Users.Services;
 
 namespace TicketBooking.UserInterface;
 
 public class ManagerInterface
 {
-    private readonly FlightServices _flightServices = new();
+    private readonly FlightServices _flightServices;
     private readonly List<BookingsModel> _bookings = new List<BookingsModel>();
     BookingsService _bookingsService;
 
-    public ManagerInterface()
+    public ManagerInterface(List<UserModel> users, List<Flight> flights)
     {
-        List<UserModel> users = (new UserServices()).GetUsers();
+        _flightServices = new(flights);
 
         _bookings.AddRange(
             users.OfType<PassengerModel>()
@@ -61,7 +60,6 @@ public class ManagerInterface
                     break;
                 default:
                     break;
-
             }
             Console.ReadLine();
             Console.Clear();

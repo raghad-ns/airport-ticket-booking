@@ -10,7 +10,7 @@ public class PassengerInterface
     public PassengerModel Passenger { get; init; }
     public List<BookingsModel> Bookings { get; init; }
     public BookingsService _bookingsService { get; init; }
-    public FlightServices _flightServices = new FlightServices();
+    public FlightServices _flightServices ;
 
     public PassengerInterface(
         BookingsService bookingsServices,

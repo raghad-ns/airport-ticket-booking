@@ -16,8 +16,10 @@ public class CSVProcessor : IFileLoader
         reader.ReadLine();
 
         List<string[]> result = new();
+
         while (!reader.EndOfStream)
         {
+
             result.Add(reader.ReadLine().Split(','));
         }
         return result;

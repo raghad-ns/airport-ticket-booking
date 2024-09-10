@@ -3,13 +3,23 @@ using TicketBooking.Users;
 using TicketBooking.Users.Managers.Models;
 using TicketBooking.Users.Passengers.Models;
 using TicketBooking.Users.Services;
+using TicketBooking.Flights.Models;
 
 namespace TicketBooking.UserInterface;
 
 public class UserInterface
 {
+    private List<UserModel> _users;
+    private List<Flight> _flights;
     private UserModel? _user;
-    private UserServices _userServices = new();
+    private UserServices _userServices ;
+
+    public UserInterface(List<UserModel> users, List<Flight> flights)
+    {
+        _users = users;
+        _flights = flights;
+        _userServices = new(users);
+    }
     public void ShowInitialMenu()
     {
         if (_user == null)
@@ -23,14 +33,14 @@ public class UserInterface
             PassengerInterface passengerInterface = new PassengerInterface(
                 passenger: passenger,
                 bookingsServices: new BookingsService(passenger.PersonalFlights),
-                flightServices: new Flights.Services.FlightServices()
+                flightServices: new Flights.Services.FlightServices(_flights)
                 );
 
             passengerInterface.ShowPassengerOptions();
         }
         else
         {
-            ManagerInterface managerInterface = new ManagerInterface();
+            ManagerInterface managerInterface = new ManagerInterface(_users, _flights);
             managerInterface.ShowManagerOptions();
         }
     }
@@ -65,7 +75,7 @@ public class UserInterface
                 PassengerInterface passengerInterface = new PassengerInterface(
                     passenger: passenger,
                     bookingsServices: new BookingsService(passenger.PersonalFlights),
-                    flightServices: new Flights.Services.FlightServices()
+                    flightServices: new Flights.Services.FlightServices(_flights)
                 );
 
                 passengerInterface.ShowPassengerOptions();
@@ -73,7 +83,7 @@ public class UserInterface
             else if (_user is ManagerModel)
             {
                 _user = (ManagerModel)_user;
-                ManagerInterface managerInterface = new ManagerInterface();
+                ManagerInterface managerInterface = new ManagerInterface(_users, _flights);
                 managerInterface.ShowManagerOptions();
             }
         }
