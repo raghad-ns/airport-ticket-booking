@@ -3,14 +3,15 @@ using TicketBooking.Airports;
 using TicketBooking.Classes;
 using TicketBooking.Countries;
 using TicketBooking.FileProcessor.Deserializer.Flight;
+using TicketBooking.Flights.Models;
 
 namespace TicketBooking.Flights.Services;
 
 public class FlightValidator
 {
-    private List<Flights.Models.Flight> _flights { get; init; }
+    private List<Flight> _flights { get; init; }
 
-    public FlightValidator(List<Flights.Models.Flight> existedFlights)
+    public FlightValidator(List<Flight> existedFlights)
     {
         _flights = existedFlights;
     }
@@ -56,6 +57,7 @@ public class FlightValidator
     private bool IsDuplicatedId(int id) => _flights.Count(flight => flight.Id == id) > 0;
 
     public bool ValidateCountry(string country) => Enum.TryParse<Country>(country, out _);
+
     // Same functionality could be achieved this way too
     //public bool ValidateCountry(string country)
     //{
@@ -78,6 +80,7 @@ public class FlightValidator
     public bool ValidateFlightClass(Dictionary<string, double> classes)
     {
         bool valid = true;
+
         try
         {
             foreach (var flightClass in classes)

@@ -2,5 +2,5 @@
 
 public enum Airport
 {
-    QueenAliaInternationalAirport
+    QueenAliaInternationalAirport = 1
 }

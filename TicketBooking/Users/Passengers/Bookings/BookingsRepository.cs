@@ -5,7 +5,6 @@ namespace TicketBooking.Users.Passengers.Bookings;
 
 public class BookingsRepository
 {
-    //public List<BookingsModel> Bookings { get; set; }
     private static string filePath = AppSettingsInitializer.AppSettingsInstance().UsersRepoPath;
 
     public static void AddBookingToFile(BookingsModel booking)

@@ -7,6 +7,7 @@ namespace TicketBooking.Users.Passengers.Bookings;
 public class BookingsService
 {
     private List<BookingsModel> _bookings { get; init; }
+
     public BookingsService(List<BookingsModel> bookings)
     {
         _bookings = bookings;

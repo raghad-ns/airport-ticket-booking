@@ -17,6 +17,7 @@ public class FlightDeserializer : IDeserialize<FlightSerialization>
         if (!string.IsNullOrWhiteSpace(flightData[4])) flightClassesDict.Add("Business", double.Parse(flightData[4]));
 
         if (!string.IsNullOrWhiteSpace(flightData[5])) flightClassesDict.Add("Economy", double.Parse(flightData[5]));
+
         return new FlightSerialization(
                 int.Parse(flightData[0]),
                 flightData[1],

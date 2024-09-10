@@ -1,11 +1,12 @@
 ﻿using System.Text;
 using TicketBooking.Classes;
+using TicketBooking.Flights.Models;
 
 namespace TicketBooking.Flights.Services;
 
 public class FlightPrinter
 {
-    public static void DisplayFlights(List<Flights.Models.Flight> flights)
+    public static void DisplayFlights(List<Flight> flights)
     {
         Console.WriteLine($"Available flights: ");
 
@@ -15,12 +16,12 @@ public class FlightPrinter
         }
     }
 
-    public static string GetFlightDetails(Flights.Models.Flight flight)
+    public static string GetFlightDetails(Flight flight)
     {
         return flight.ToString() + '\n' + GetFlightClassesAndPrices(flight);
     }   
 
-    public static string GetFlightClassesAndPrices(Flights.Models.Flight flight)
+    public static string GetFlightClassesAndPrices(Flight flight)
     {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.AppendLine("Available classes: ");
