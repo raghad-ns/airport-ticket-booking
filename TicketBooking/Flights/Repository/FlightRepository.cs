@@ -6,19 +6,19 @@ using TicketBooking.AppSettings;
 using TicketBooking.FileProcessor.Deserializer.Flight;
 using TicketBooking.FileProcessor.CSVProcessor;
 using TicketBooking.Flights.Models;
+using TicketBooking.Users.Passengers.Bookings;
 
 namespace TicketBooking.Flights.Repository;
 
 public class FlightRepository
 {
     private List<Flight> Flights { get; set; }
-    private static FlightRepository _instance ;
+    private static FlightRepository _instance;
+    private static readonly string filePath = AppSettingsInitializer.AppSettingsInstance().FlightsRepoPath;
 
     private FlightRepository(List<Flight> flights)
     {
         Flights = flights;
-        // Sure that flights data stored in the app file are all valid, so upload feedback cleared from the console
-        Console.Clear();
     }
 
     public static FlightRepository GetInstance(List<Flight> flights)
@@ -104,8 +104,35 @@ public class FlightRepository
                 continue;
             }
 
-            Flights.Add(FlightServices.GetFlightObject(DeserializedFlightData));
+            Flight flight = FlightServices.GetFlightObject(DeserializedFlightData);
+            Flights.Add(flight);
+            AddFlightToFile(flight);
+
             Console.WriteLine($"Flight holding the id: {DeserializedFlightData.id} uploaded successfully!");
         }
+    }
+
+    public static void AddFlightToFile(Flight flight)
+    {
+        List<string> lines = new List<string>();
+
+        lines.AddRange(File.ReadAllLines(filePath));
+        double price;
+
+        string newLine =
+            flight.Id + "," +
+            flight.DepartureCountry + "," +
+            flight.DepartureCountry + "," +
+            (flight.Class.TryGetValue(Class.FirstClass, out price)? price.ToString() : "") + "," +
+            (flight.Class.TryGetValue(Class.Business, out price) ? price.ToString() : "") + "," +
+            (flight.Class.TryGetValue(Class.Economy, out price) ? price.ToString() : "") + "," +
+            flight.FlightNo + "," +
+            flight.DepartureDate + "," +
+            flight.DepartureAirport + "," +
+            flight.ArrivalAirport;
+
+        lines.Add(newLine);
+
+        File.WriteAllLines(filePath, lines);
     }
 }

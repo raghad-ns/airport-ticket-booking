@@ -87,6 +87,13 @@ internal class InitApplicationService
                 });
             }
         }
+
+        if (passengerBookings.Count > 0)
+        {
+            ((PassengerModel)Users[Users.Count - 1]).PersonalFlights = new List<BookingsModel>(passengerBookings);
+            passengerBookings.Clear();
+        }
+
         return Users;
     }
 

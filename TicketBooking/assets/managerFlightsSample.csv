@@ -1,4 +1,4 @@
 Id,DepartureCountry,DestinationCountry,FirstClassPrice,BussinessClassPrice,EconomicPrice,Flightnumber,DepartureDate,DepartureAirport,ArraivalAirport
 11,Jordan,France,2000,1500,-900,A55,8/29/2024 12:00:00 AM,QueenAliaInternationalAirport,QueenA5liaInternationalAirport
 21,Caanada,Egypt,,1300,500,A55,8/29/2024 12:00:00 AM,Qu8eenAliaInternationalAirport,QueenAliaInternationalAirport
-31,USA,Palestine,3050,200,,A55,8/29/2024 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport
+31,USA,Palestine,3050,200,,A55,8/29/2025 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport
