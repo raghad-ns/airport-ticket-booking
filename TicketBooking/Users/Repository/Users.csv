@@ -1,6 +1,6 @@
 Role,Id,First Name,Last Name,Email,Password,Booking Id,Flight Id,Class
 passenger,1,John,Smith,john.smith@gmail.com,123456
-,,,,,,1,1,Business
+,,,,,,1,1,FirstClass
 ,,,,,,4,1,Business
 ,,,,,,2,4,FirstClass
 ,,,,,,3,4,FirstClass
