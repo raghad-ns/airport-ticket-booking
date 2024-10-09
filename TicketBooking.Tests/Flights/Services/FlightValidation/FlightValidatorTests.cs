@@ -1,9 +1,12 @@
 ﻿using AutoFixture;
-using AutoFixture.Xunit2;
 using FluentAssertions;
 using Moq;
 using TicketBooking.Flights.Models;
 using TicketBooking.Flights.Services;
+using TicketBooking.FileProcessor.Deserializer.Flight;
+using TicketBooking.Tests.Flights.Services.FlightValidation.TestData;
+using TicketBooking.Airports;
+using TicketBooking.Countries;
 
 namespace TicketBooking.Tests.Flights.Services.FlightValidation;
 
@@ -12,13 +15,12 @@ public class FlightValidatorTests
     private readonly Fixture _fixture;
     private FlightValidator _validator;
     private readonly Mock<List<Flight>> _flightsMock;
-    private static readonly Dictionary<string, double> _ValidFlightClasses = new Dictionary<string, double> { { "Economy", 2500.5 } };
+
     public FlightValidatorTests()
     {
         _flightsMock = new();
         _validator = new(_flightsMock.Object);
         _fixture = new Fixture();
-        //_ValidFlightClasses = new Dictionary<string, double> { { "Economy", 2500.5 } };
     }
 
     [Theory]
@@ -108,5 +110,41 @@ public class FlightValidatorTests
 
         //Assert
         result.Should().BeFalse();
+    }
+
+    [Theory]
+    [MemberData("TestData", MemberType = typeof(FlightValidationTestData))]
+    public void ValidateAllProperties_InvalidReturns(FlightSerialization flightDetails, string expectedResult)
+    {
+        // Arrange
+        // Done
+
+        // Act
+        string result = _validator.ValidateFlightProperties(flightDetails);
+
+        // Assert
+        result.Should().Contain(expectedResult);
+    }
+
+    [Fact]
+    public void ValidateAllProperties_SuccessStatus()
+    {
+        // Arrange
+        var flightDetails = new FlightSerialization(
+                    1,
+                    Country.Palestine.ToString(),
+                    Country.Germany.ToString(),
+                    "AP105",
+                    new Dictionary<string, double> { { "Economy", 2500.5 } },
+                    DateTime.Now.AddDays(1),
+                    Airport.QueenAliaInternationalAirport.ToString(),
+                    Airport.QueenAliaInternationalAirport.ToString()
+                );
+
+        // Act
+        string result = _validator.ValidateFlightProperties(flightDetails);
+
+        // Assert
+        result.Should().BeEmpty();
     }
 }

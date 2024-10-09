@@ -1,4 +1,4 @@
-﻿namespace TicketBooking.Tests.Flights.Services.FlightValidation;
+﻿namespace TicketBooking.Tests.Flights.Services.FlightValidation.TestData;
 
 public class FlightClassValidationTestData
 {
