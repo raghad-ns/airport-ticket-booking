@@ -1,6 +1,6 @@
 ﻿namespace TicketBooking.Users.Repository;
 
-public class UserRepository
+public class UserRepository: IUserRepository
 {
     public static List<UserModel> Users { get; set; } = new List<UserModel>();
     private static UserRepository _instance ;

@@ -4,9 +4,9 @@ namespace TicketBooking.Users.Services;
 
 public class UserServices
 {
-    private UserRepository _userRepository;
-    public UserServices(List<UserModel> users) {
-        _userRepository = UserRepository.GetInstance(users);
+    private IUserRepository _userRepository;
+    public UserServices(IUserRepository userRepository) {
+        _userRepository = userRepository;
     }
     public UserModel Login(string email, string password)
     {

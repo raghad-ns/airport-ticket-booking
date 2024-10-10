@@ -6,6 +6,7 @@ using TicketBooking.Users.Services;
 using TicketBooking.Flights.Models;
 using TicketBooking.Flights.Repository;
 using TicketBooking.Flights.Services;
+using TicketBooking.Users.Repository;
 
 namespace TicketBooking.UserInterface;
 
@@ -16,11 +17,11 @@ public class UserInterface
     private UserModel? _user;
     private UserServices _userServices ;
 
-    public UserInterface(List<UserModel> users, List<Flight> flights)
+    public UserInterface(List<UserModel> users, List<Flight> flights, IUserRepository userRepository)
     {
         _users = users;
         _flights = flights;
-        _userServices = new(users);
+        _userServices = new(userRepository);
     }
     public void ShowInitialMenu()
     {

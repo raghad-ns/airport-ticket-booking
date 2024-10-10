@@ -1,6 +1,7 @@
 ﻿using TicketBooking.FileProcessor.Services;
 using TicketBooking.Flights.Models;
 using TicketBooking.Users;
+using TicketBooking.Users.Repository;
 
 namespace TicketBooking;
 
@@ -13,7 +14,7 @@ internal class Program
     {
         InitApp();
 
-        UserInterface.UserInterface userInterface = new UserInterface.UserInterface(_users, _flights);
+        UserInterface.UserInterface userInterface = new UserInterface.UserInterface(_users, _flights, UserRepository.GetInstance(_users));
         userInterface.ShowInitialMenu();
     }
 
