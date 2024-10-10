@@ -10,10 +10,12 @@ public class FlightPrinterTests
 {
     private readonly Flight _flight;
     private readonly Fixture _fixture;
+    private readonly FlightPrinter _printer;
 
     public FlightPrinterTests()
     {
         _fixture = new Fixture();
+        _printer = new();
 
         _flight = _fixture.Freeze<Flight>();
         _flight.Class = new Dictionary<Class, double> {
@@ -29,7 +31,7 @@ public class FlightPrinterTests
         // Done
 
         // Act
-        var classes = FlightPrinter.GetFlightClassesAndPrices(_flight);
+        var classes = _printer.GetFlightClassesAndPrices(_flight);
 
         // Asset
         classes.Should().Contain($"Economy => $2500.5");
@@ -42,7 +44,7 @@ public class FlightPrinterTests
         // Done
 
         // Act
-        var details = FlightPrinter.GetFlightDetails(_flight);
+        var details = _printer.GetFlightDetails(_flight);
 
         // Asset
         details.Should().ContainAll(
@@ -66,12 +68,11 @@ public class FlightPrinterTests
         Console.SetOut(stringWriter);
 
         // Act
-        FlightPrinter.DisplayFlights(flightsList);
+        _printer.DisplayFlights(flightsList);
         var output = stringWriter.ToString();
 
         // Assert
         // one line before displaying and one after
         output.Split('\n').Should().HaveCount(flightsList.Count + 2);
-        ;
     }
 }

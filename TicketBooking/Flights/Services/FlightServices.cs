@@ -7,13 +7,15 @@ using TicketBooking.Flights.Repository;
 
 namespace TicketBooking.Flights.Services;
 
-public class FlightServices
+public class FlightServices: IFlightService
 {
-    private FlightRepository _flightRepository;
+    private IFlightRepository _flightRepository;
+    private readonly IFlightPrinter _flightPrinter;
 
-    public FlightServices(List<Flight> flights)
+    public FlightServices(List<Flight> flights, IFlightRepository flightRepository, IFlightPrinter flightPrinter)
     {
-        _flightRepository = FlightRepository.GetInstance(flights);
+        _flightRepository = flightRepository;
+        _flightPrinter = flightPrinter;
     }
 
     public List<Flight> FilterFlights(
@@ -44,7 +46,7 @@ public class FlightServices
 
     public void DisplayFlights()
     {
-        FlightPrinter.DisplayFlights(GetFlights());
+        _flightPrinter.DisplayFlights(GetFlights());
     }
 
     public List<Flight> GetFlights()
@@ -54,12 +56,12 @@ public class FlightServices
 
     public string GetFlightClassesAndPricesForDisplay(Flight flight)
     {
-        return FlightPrinter.GetFlightClassesAndPrices(flight);
+        return _flightPrinter.GetFlightClassesAndPrices(flight);
     }
 
     public string GetFlightDetailsForDisplay(Flight flight)
     {
-        return FlightPrinter.GetFlightDetails(flight);
+        return _flightPrinter.GetFlightDetails(flight);
     }
 
     public static Flight GetFlightObject(FlightSerialization flight)

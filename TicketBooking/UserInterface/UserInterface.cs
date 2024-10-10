@@ -4,6 +4,8 @@ using TicketBooking.Users.Managers.Models;
 using TicketBooking.Users.Passengers.Models;
 using TicketBooking.Users.Services;
 using TicketBooking.Flights.Models;
+using TicketBooking.Flights.Repository;
+using TicketBooking.Flights.Services;
 
 namespace TicketBooking.UserInterface;
 
@@ -33,7 +35,7 @@ public class UserInterface
             PassengerInterface passengerInterface = new PassengerInterface(
                 passenger: passenger,
                 bookingsServices: new BookingsService(passenger.PersonalFlights),
-                flightServices: new Flights.Services.FlightServices(_flights)
+                flightServices: new Flights.Services.FlightServices(_flights, FlightRepository.GetInstance(_flights), new FlightPrinter())
                 );
 
             passengerInterface.ShowPassengerOptions();
@@ -75,7 +77,7 @@ public class UserInterface
                 PassengerInterface passengerInterface = new PassengerInterface(
                     passenger: passenger,
                     bookingsServices: new BookingsService(passenger.PersonalFlights),
-                    flightServices: new Flights.Services.FlightServices(_flights)
+                    flightServices: new Flights.Services.FlightServices(_flights, FlightRepository.GetInstance(_flights), new FlightPrinter())
                 );
 
                 passengerInterface.ShowPassengerOptions();

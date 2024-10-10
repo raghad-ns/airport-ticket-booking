@@ -10,7 +10,7 @@ using TicketBooking.Users.Passengers.Bookings;
 
 namespace TicketBooking.Flights.Repository;
 
-public class FlightRepository
+public class FlightRepository: IFlightRepository
 {
     private List<Flight> Flights { get; set; }
     private static FlightRepository _instance;
@@ -104,6 +104,7 @@ public class FlightRepository
                 continue;
             }
 
+            //Flight flight = (new FlightServices(Flights,this, new FlightPrinter())).GetFlightObject(DeserializedFlightData);
             Flight flight = FlightServices.GetFlightObject(DeserializedFlightData);
             Flights.Add(flight);
             AddFlightToFile(flight);
