@@ -4,7 +4,7 @@ using TicketBooking.Classes;
 using TicketBooking.Flights.Models;
 using TicketBooking.Flights.Services;
 
-namespace TicketBooking.Tests.Flights.Services;
+namespace TicketBooking.Tests.Flights.Printers;
 
 public class FlightPrinterTests
 {

@@ -4,11 +4,11 @@ using Moq;
 using TicketBooking.Flights.Models;
 using TicketBooking.Flights.Services;
 using TicketBooking.FileProcessor.Deserializer.Flight;
-using TicketBooking.Tests.Flights.Services.FlightValidation.TestData;
 using TicketBooking.Airports;
 using TicketBooking.Countries;
+using TicketBooking.Tests.Flights.Validators.TestData;
 
-namespace TicketBooking.Tests.Flights.Services.FlightValidation;
+namespace TicketBooking.Tests.Flights.Validators;
 
 public class FlightValidatorTests
 {

@@ -2,7 +2,7 @@
 using TicketBooking.Countries;
 using TicketBooking.FileProcessor.Deserializer.Flight;
 
-namespace TicketBooking.Tests.Flights.Services.FlightValidation.TestData;
+namespace TicketBooking.Tests.Flights.Validators.TestData;
 
 public class FlightValidationTestData
 {
