@@ -1,4 +1,5 @@
 ﻿using AutoFixture;
+using FluentAssertions;
 using Moq;
 using TicketBooking.Airports;
 using TicketBooking.Classes;
@@ -39,7 +40,7 @@ public class FlightServicesTests
     }
 
     [Fact]
-    public void FilterFlights_ShouldCallRepositoryMethod()
+    public void FilterFlights_ShouldReturnFlights_FiltersMatch()
     {
         // Arrange
         var priceFrom = _fixture.Create<double>();
@@ -49,6 +50,18 @@ public class FlightServicesTests
         var departureAirport = _fixture.Create<Airport>().ToString();
         var arrivalAirport = _fixture.Create<Airport>().ToString();
         var flightClass = _fixture.Create<Class>();
+        var flightsList = _fixture.CreateMany<Flight>().ToList();
+        _flightRepositoryMock
+            .Setup(repo =>
+            repo.FilterFlights(
+                priceFrom,
+                priceTo,
+                departureCountry,
+                destinationCountry,
+                departureAirport,
+                arrivalAirport,
+                flightClass))
+            .Returns(flightsList);
 
         // Act
         var filteredFlights = _flightService.FilterFlights(
@@ -62,8 +75,21 @@ public class FlightServicesTests
             );
 
         // Assert
+        filteredFlights.Should().BeEquivalentTo(flightsList);
+    }
+    [Fact]
+    public void FilterFlights_ShouldReturnEmptyList_FiltersMismatch()
+    {
+        // Arrange
+        var priceFrom = _fixture.Create<double>();
+        var priceTo = _fixture.Create<double>();
+        var departureCountry = _fixture.Create<Country>().ToString();
+        var destinationCountry = _fixture.Create<Country>().ToString();
+        var departureAirport = _fixture.Create<Airport>().ToString();
+        var arrivalAirport = _fixture.Create<Airport>().ToString();
+        var flightClass = _fixture.Create<Class>();
         _flightRepositoryMock
-            .Verify(repo =>
+            .Setup(repo =>
             repo.FilterFlights(
                 priceFrom,
                 priceTo,
@@ -71,21 +97,36 @@ public class FlightServicesTests
                 destinationCountry,
                 departureAirport,
                 arrivalAirport,
-                flightClass)
-            , "FlightRepository.FilterFlights should be called exactly once");
+                flightClass))
+            .Returns(new List<Flight>());
+
+        // Act
+        var filteredFlights = _flightService.FilterFlights(
+                priceFrom,
+                priceTo,
+                departureCountry,
+                destinationCountry,
+                departureAirport,
+                arrivalAirport,
+                flightClass
+            );
+
+        // Assert
+        filteredFlights.Should().HaveCount(0);
     }
 
     [Fact]
-    public void GetFlights_ShouldCallRepositoryMethod()
+    public void GetFlights_ShouldReturnFlightsList()
     {
         // Arrange
-        // Done
+        var flights = _fixture.CreateMany<Flight>().ToList();
+        _flightRepositoryMock.Setup(repo => repo.GetFlights()).Returns(flights);
 
         // Act
-        _flightService.GetFlights();
+        var returnedFlights = _flightService.GetFlights();
 
         // Assert
-        _flightRepositoryMock.Verify(repo => repo.GetFlights(), "FlightRepository.GetFlights should be called exactly once");
+        returnedFlights.Should().BeEquivalentTo(flights);
     }
 
     [Fact]
@@ -102,28 +143,30 @@ public class FlightServicesTests
     }
 
     [Fact]
-    public void GetFlightClassesAndPricesForDisplay_ShouldCallPrinterMethod()
+    public void GetFlightClassesAndPricesForDisplay_ShouldReturnFlightClassesAsString()
     {
         // Arrange
-        // Done
+        var flightClass = _fixture.Create<string>();
+        _flightPrinterMock.Setup(printer => printer.GetFlightClassesAndPrices(It.IsAny<Flight>())).Returns(flightClass);
 
         // Act
-        _flightService.GetFlightClassesAndPricesForDisplay(_fixture.Create<Flight>());
+        var returnedClass = _flightService.GetFlightClassesAndPricesForDisplay(_fixture.Create<Flight>());
 
         // Assert
-        _flightPrinterMock.Verify(printer => printer.GetFlightClassesAndPrices(It.IsAny<Flight>()), "FlightPrinter.GetFlightClassesAndPricesForDisplay should be called exactly once");
+        returnedClass.Should().Be(flightClass);
     }
 
     [Fact]
-    public void GetFlightDetailsForDisplay_ShouldCallPrinterMethod()
+    public void GetFlightDetailsForDisplay_ShouldReturnFlightDetailsAsString()
     {
         // Arrange
-        // Done
+        var flight = _fixture.Create<string>();
+        _flightPrinterMock.Setup(printer => printer.GetFlightDetails(It.IsAny<Flight>())).Returns(flight);
 
         // Act
-        _flightService.GetFlightDetailsForDisplay(_fixture.Create<Flight>());
+        var flightDetails = _flightService.GetFlightDetailsForDisplay(_fixture.Create<Flight>());
 
         // Assert
-        _flightPrinterMock.Verify(printer => printer.GetFlightDetails(It.IsAny<Flight>()), "FlightPrinter.GetFlightDetailsForDisplay should be called exactly once");
+        flightDetails.Should().Be(flight);
     }
 }

@@ -1,5 +1,7 @@
 ﻿using AutoFixture;
+using FluentAssertions;
 using Moq;
+using TicketBooking.Users;
 using TicketBooking.Users.Repository;
 using TicketBooking.Users.Services;
 
@@ -19,29 +21,31 @@ public class UserServicesTests
     }
 
     [Fact]
-    public void Login_ShouldCallRepositoryMethod()
+    public void Login_ShouldReturnUserObject()
     {
         // Arrange
-        var email = _fixture.Create<string>();
-        var password = _fixture.Create<string>();
+        var user = _fixture.Freeze<UserModel>();
+        _userRepositoryMock.Setup(repo => repo.Login(It.IsAny<string>(), It.IsAny<string>())).Returns(user);
 
         // Act
-        _userService.Login(email, password);
+        var users = _userRepositoryMock.Object.GetUsers();
+        var loggedInUser = _userService.Login(user.Email, user.Password);
 
         // Assert
-        _userRepositoryMock.Verify(repo => repo.Login(email, password), "UserRepository.Login should be called exactly once");
+        loggedInUser.Should().BeEquivalentTo(user);
     }
 
     [Fact]
-    public void GetUsers_ShouldCallRepositoryMethod()
+    public void GetUsers_ShouldRetyrnUsersList()
     {
         // Arrange
-        // Done
+        var users = _fixture.CreateMany<UserModel>().ToList();
+        _userRepositoryMock.Setup(repo => repo.GetUsers()).Returns(users);
 
         // Act
-        _userService.GetUsers();
+        var returnedUsers = _userService.GetUsers();
 
         // Assert
-        _userRepositoryMock.Verify(repo => repo.GetUsers(), "UserRepository.Login should be called exactly once");
+        returnedUsers.Should().BeEquivalentTo(users);
     }
 }

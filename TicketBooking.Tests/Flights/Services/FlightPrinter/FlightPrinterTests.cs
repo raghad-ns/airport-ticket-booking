@@ -25,7 +25,7 @@ public class FlightPrinterTests
     }
 
     [Fact]
-    public void GetFlightClassesAndPrices_Success()
+    public void GetFlightClassesAndPrices_ReturnFlightClassesAsString()
     {
         // Arrange
         // Done
@@ -38,7 +38,7 @@ public class FlightPrinterTests
     }
 
     [Fact]
-    public void GetFlightDetails_Success()
+    public void GetFlightDetails_ConvertFlightObjectToString()
     {
         // Arrange
         // Done
@@ -59,7 +59,7 @@ public class FlightPrinterTests
     }
 
     [Fact]
-    public void DisplayFlights_Success()
+    public void DisplayFlights_PrintingFlightsInTheConsole()
     {
         // Arrange
         var flightsList = _fixture.CreateMany<Flight>(5).ToList();

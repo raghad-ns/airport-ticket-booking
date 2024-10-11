@@ -25,8 +25,9 @@ public class FlightValidatorTests
 
     [Theory]
     [InlineData(1, true)]
-    [InlineData(-5, false)]
-    public void ValidateIdTest(int id, bool expectedResult)
+    [InlineData(3089799, true)]
+    [InlineData(4234, true)]
+    public void ValidateId_ReturnTrue(int id, bool expectedResult)
     {
         // Arrange
         // Done
@@ -39,66 +40,133 @@ public class FlightValidatorTests
     }
 
     [Theory]
-    [InlineData("QueenAliaInternationalAirport", true)]
-    [InlineData("CairoAirport", false)]
-    public void ValidateAirportTest(string airport, bool expectedResult)
+    [InlineData(-5, false)]
+    [InlineData(-43248, false)]
+    [InlineData(-747382, false)]
+    public void ValidateId_ReturnFalse(int id, bool expectedResult)
     {
         // Arrange
         // Done
+
+        // Act
+        bool idValidation = _validator.validateId(id);
+
+        // Assert
+        idValidation.Should().Be(expectedResult);
+    }
+
+    [Fact]
+    public void ValidateAirport_ReturnTrue_ExistedAirport()
+    {
+        // Arrange
+        string airport = "QueenAliaInternationalAirport";
 
         // Act
         bool airportValidation = _validator.ValidateAirport(airport);
 
         // Assert
-        airportValidation.Should().Be(expectedResult);
+        airportValidation.Should().BeTrue();
     }
 
-    [Theory]
-    [InlineData("Palestine", true)]
-    [InlineData("London", false)]
-    public void ValidateCountryTest(string country, bool expectedResult)
+    [Fact]
+    public void ValidateAirport_ReturnFalse_NotExistedAirport()
     {
         // Arrange
-        // Done
+        string airport = "CairoAirport";
+
+        // Act
+        bool airportValidation = _validator.ValidateAirport(airport);
+
+        // Assert
+        airportValidation.Should().BeFalse();
+    }
+
+    [Fact]
+    public void ValidateCountry_ReturnTrue_ExistedCountry()
+    {
+        // Arrange
+        var country = "Palestine";
 
         // Act
         bool countryValidation = _validator.ValidateCountry(country);
 
         // Assert
-        countryValidation.Should().Be(expectedResult);
+        countryValidation.Should().BeTrue();
     }
 
-    [Theory]
-    [MemberData("TestData", MemberType = typeof(FlightClassValidationTestData))]
-    public void ValidateFlightClassTest(Dictionary<string, double> flightClass, bool expectedResult)
+    [Fact]
+    public void ValidateCountryReturnFalse_NotExistedCountry()
     {
         // Arrange
-        // Done
+        var country = "London";
+
+        // Act
+        bool countryValidation = _validator.ValidateCountry(country);
+
+        // Assert
+        countryValidation.Should().BeFalse();
+    }
+
+    [Fact]
+    public void ValidateFlightClass_ReturnTrue_ExistedClass()
+    {
+        // Arrange
+        var flightClass = new Dictionary<string, double> { { "Economy", 2500.5 } };
 
         // Act
         bool flightClassValidation = _validator.ValidateFlightClass(flightClass);
 
         // Assert
-        flightClassValidation.Should().Be(expectedResult);
-    }
-
-    [Theory]
-    [InlineData(3, true)]
-    [InlineData(-5, false)]
-    public void ValidateDepartureDateTest(int days, bool expectedResult)
-    {
-        // Arrange
-        // Done
-
-        // Act
-        bool departureTimeValidation = _validator.ValidateDepartureTime(DateTime.Now.AddDays(days));
-
-        // Assert
-        departureTimeValidation.Should().Be(expectedResult);
+        flightClassValidation.Should().BeTrue();
     }
 
     [Fact]
-    public void IdDuplicationTest()
+    public void ValidateFlightClass_ReturnFalse_NotExistedClass()
+    {
+        // Arrange
+        var flightClass = new Dictionary<string, double> { { "Luxury", 7000 } };
+
+        // Act
+        bool flightClassValidation = _validator.ValidateFlightClass(flightClass);
+
+        // Assert
+        flightClassValidation.Should().BeFalse();
+    }
+
+    [Theory]
+    [InlineData(3)]
+    [InlineData(40)]
+    [InlineData(23)]
+    public void ValidateDepartureDate_ReturnTrue_FutureDate(int days)
+    {
+        // Arrange
+        var departureDate = DateTime.Now.AddDays(days);
+
+        // Act
+        bool departureTimeValidation = _validator.ValidateDepartureTime(departureDate);
+
+        // Assert
+        departureTimeValidation.Should().BeTrue();
+    }
+
+    [Theory]
+    [InlineData(-3)]
+    [InlineData(-40)]
+    [InlineData(-23)]
+    public void ValidateDepartureDate_ReturnFalse_PastDate(int days)
+    {
+        // Arrange
+        var departureDate = DateTime.Now.AddDays(days);
+
+        // Act
+        bool departureTimeValidation = _validator.ValidateDepartureTime(departureDate);
+
+        // Assert
+        departureTimeValidation.Should().BeFalse();
+    }
+
+    [Fact]
+    public void IdDuplication_ReturnFalse_IdAlreadyExisted()
     {
         // Arrange
         var flight = _fixture.Freeze<Flight>();
@@ -114,7 +182,7 @@ public class FlightValidatorTests
 
     [Theory]
     [MemberData("TestData", MemberType = typeof(FlightValidationTestData))]
-    public void ValidateAllProperties_InvalidReturns(FlightSerialization flightDetails, string expectedResult)
+    public void ValidateAllProperties_ReturnsValidationErrorMesage(FlightSerialization flightDetails, string ValidationErrorMessage)
     {
         // Arrange
         // Done
@@ -123,11 +191,11 @@ public class FlightValidatorTests
         string result = _validator.ValidateFlightProperties(flightDetails);
 
         // Assert
-        result.Should().Contain(expectedResult);
+        result.Should().Contain(ValidationErrorMessage);
     }
 
     [Fact]
-    public void ValidateAllProperties_SuccessStatus()
+    public void ValidateAllProperties_ReturnsEmptyString_AllPropertiesAreValid()
     {
         // Arrange
         var flightDetails = new FlightSerialization(
