@@ -7,13 +7,15 @@ namespace TicketBooking.Users.Passengers.Bookings;
 public class BookingsService
 {
     private List<BookingsModel> _bookings { get; init; }
+    private readonly IBookingsRepository _bookingsRepository;
 
-    public BookingsService(List<BookingsModel> bookings)
+    public BookingsService(List<BookingsModel> bookings, IBookingsRepository bookingsRepository)
     {
         _bookings = bookings;
+        _bookingsRepository = bookingsRepository;
     }
 
-    public List<BookingsModel> BetBookings() { return _bookings; }
+    public List<BookingsModel> GetBookings() { return _bookings; }
 
     public void AddBooking(Flights.Models.Flight flight, Class flightClass, int userId)
     {
@@ -26,12 +28,12 @@ public class BookingsService
         };
 
         _bookings.Add(booking);
-        BookingsRepository.AddBookingToFile(booking);
+        _bookingsRepository.AddBookingToFile(booking);
     }
 
     public void CancelBooking(int id)
     {
-        BookingsRepository.RemoveBookingFromFile(id);
+        _bookingsRepository.RemoveBookingFromFile(id);
         BookingsModel? toBeRemoved = _bookings.SingleOrDefault(booking => booking.Id == id);
 
         if (toBeRemoved is not null)
@@ -45,7 +47,7 @@ public class BookingsService
         // Here I'm intended to get exception raised in case of error or no item holding this Id
         BookingsModel? toBeModified = _bookings.Find(booking => booking.Id == id);
         toBeModified.ChosenClass = newClass;
-        BookingsRepository.UpdateBooking(toBeModified);
+        _bookingsRepository.UpdateBooking(toBeModified);
     }
 
     public void DisplayBookings(bool displayUserId = false)

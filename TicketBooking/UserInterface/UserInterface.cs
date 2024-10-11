@@ -35,7 +35,7 @@ public class UserInterface
             PassengerModel passenger = (PassengerModel)_user;
             PassengerInterface passengerInterface = new PassengerInterface(
                 passenger: passenger,
-                bookingsServices: new BookingsService(passenger.PersonalFlights),
+                bookingsServices: new BookingsService(passenger.PersonalFlights, new BookingsRepository()),
                 flightServices: new Flights.Services.FlightServices(_flights, FlightRepository.GetInstance(_flights), new FlightPrinter())
                 );
 
@@ -77,7 +77,7 @@ public class UserInterface
 
                 PassengerInterface passengerInterface = new PassengerInterface(
                     passenger: passenger,
-                    bookingsServices: new BookingsService(passenger.PersonalFlights),
+                    bookingsServices: new BookingsService(passenger.PersonalFlights, new BookingsRepository()),
                     flightServices: new Flights.Services.FlightServices(_flights, FlightRepository.GetInstance(_flights), new FlightPrinter())
                 );
 

@@ -24,7 +24,7 @@ public class ManagerInterface
             .SelectMany(user => user.PersonalFlights)
             );
 
-        _bookingsService = new(_bookings);
+        _bookingsService = new(_bookings, new BookingsRepository());
     }
     public void ShowManagerOptions()
     {
