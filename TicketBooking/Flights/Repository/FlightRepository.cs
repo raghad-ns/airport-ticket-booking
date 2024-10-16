@@ -10,7 +10,7 @@ using TicketBooking.Users.Passengers.Bookings;
 
 namespace TicketBooking.Flights.Repository;
 
-public class FlightRepository
+public class FlightRepository: IFlightRepository
 {
     private List<Flight> Flights { get; set; }
     private static FlightRepository _instance;
@@ -83,7 +83,7 @@ public class FlightRepository
         return Flights;
     }
 
-    public void LoadFlights(string? path = null)
+    public List<Flight> LoadFlights(string? path = null)
     {
         // Assign this value if path is null
         path ??= AppSettingsInitializer.AppSettingsInstance().FlightsRepoPath;
@@ -104,12 +104,14 @@ public class FlightRepository
                 continue;
             }
 
+            //Flight flight = (new FlightServices(Flights,this, new FlightPrinter())).GetFlightObject(DeserializedFlightData);
             Flight flight = FlightServices.GetFlightObject(DeserializedFlightData);
             Flights.Add(flight);
             AddFlightToFile(flight);
 
             Console.WriteLine($"Flight holding the id: {DeserializedFlightData.id} uploaded successfully!");
         }
+        return Flights;
     }
 
     public static void AddFlightToFile(Flight flight)

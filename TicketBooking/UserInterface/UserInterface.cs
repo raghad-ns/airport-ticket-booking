@@ -4,6 +4,9 @@ using TicketBooking.Users.Managers.Models;
 using TicketBooking.Users.Passengers.Models;
 using TicketBooking.Users.Services;
 using TicketBooking.Flights.Models;
+using TicketBooking.Flights.Repository;
+using TicketBooking.Flights.Services;
+using TicketBooking.Users.Repository;
 
 namespace TicketBooking.UserInterface;
 
@@ -14,11 +17,11 @@ public class UserInterface
     private UserModel? _user;
     private UserServices _userServices ;
 
-    public UserInterface(List<UserModel> users, List<Flight> flights)
+    public UserInterface(List<UserModel> users, List<Flight> flights, IUserRepository userRepository)
     {
         _users = users;
         _flights = flights;
-        _userServices = new(users);
+        _userServices = new(userRepository);
     }
     public void ShowInitialMenu()
     {
@@ -32,8 +35,8 @@ public class UserInterface
             PassengerModel passenger = (PassengerModel)_user;
             PassengerInterface passengerInterface = new PassengerInterface(
                 passenger: passenger,
-                bookingsServices: new BookingsService(passenger.PersonalFlights),
-                flightServices: new Flights.Services.FlightServices(_flights)
+                bookingsServices: new BookingsService(passenger.PersonalFlights, new BookingsRepository()),
+                flightServices: new Flights.Services.FlightServices(_flights, FlightRepository.GetInstance(_flights), new FlightPrinter())
                 );
 
             passengerInterface.ShowPassengerOptions();
@@ -74,8 +77,8 @@ public class UserInterface
 
                 PassengerInterface passengerInterface = new PassengerInterface(
                     passenger: passenger,
-                    bookingsServices: new BookingsService(passenger.PersonalFlights),
-                    flightServices: new Flights.Services.FlightServices(_flights)
+                    bookingsServices: new BookingsService(passenger.PersonalFlights, new BookingsRepository()),
+                    flightServices: new Flights.Services.FlightServices(_flights, FlightRepository.GetInstance(_flights), new FlightPrinter())
                 );
 
                 passengerInterface.ShowPassengerOptions();

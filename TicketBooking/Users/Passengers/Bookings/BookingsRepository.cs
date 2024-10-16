@@ -3,11 +3,11 @@ using TicketBooking.Classes;
 
 namespace TicketBooking.Users.Passengers.Bookings;
 
-public class BookingsRepository
+public class BookingsRepository: IBookingsRepository
 {
-    private static string filePath = AppSettingsInitializer.AppSettingsInstance().UsersRepoPath;
+    private string filePath = AppSettingsInitializer.AppSettingsInstance().UsersRepoPath;
 
-    public static void AddBookingToFile(BookingsModel booking)
+    public void AddBookingToFile(BookingsModel booking)
     {
         List<string> lines = new List<string>();
 
@@ -35,7 +35,7 @@ public class BookingsRepository
         File.WriteAllLines(filePath, lines);
     }
 
-    public static void RemoveBookingFromFile(int id)
+    public void RemoveBookingFromFile(int id)
     {
         List<string> lines = new List<string>();
 
@@ -52,7 +52,7 @@ public class BookingsRepository
         File.WriteAllLines(filePath, lines);
     }
 
-    public static void UpdateBooking(BookingsModel newBooking)
+    public void UpdateBooking(BookingsModel newBooking)
     {
         List<string> lines = new List<string>();
 

@@ -7,3 +7,4 @@ Id,DepartureCountry,DestinationCountry,FirstClassPrice,BussinessClassPrice,Econo
 6,Palestine,USA,,,400,A55,8/29/2025 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport
 7,Palestine,USA,,900,,A55,8/29/2025 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport
 8,Palestine,USA,1500,900,,A55,8/29/2025 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport
+31,USA,USA,3050,200,,A55,8/29/2025 12:00:00 AM,QueenAliaInternationalAirport,QueenAliaInternationalAirport

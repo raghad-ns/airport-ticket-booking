@@ -8,7 +8,8 @@ public class AppSettingsInitializer
 
     private AppSettingsInitializer()
     {
-        string appSettingsJson = File.ReadAllText(@"..\..\..\AppSettings\appsettings.json");
+        //string appSettingsJson = File.ReadAllText(@"..\..\..\AppSettings\appsettings.json");
+        string appSettingsJson = File.ReadAllText(@"C:\Users\M.T\Desktop\projects\foothill\practice-projects\AirportTicketBooking\TicketBooking\AppSettings\appsettings.json");
         _appSettings = JsonSerializer.Deserialize<AppSettingsModel>(appSettingsJson);
     }
 

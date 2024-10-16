@@ -4,9 +4,9 @@ using TicketBooking.Flights.Models;
 
 namespace TicketBooking.Flights.Services;
 
-public class FlightPrinter
+public class FlightPrinter: IFlightPrinter
 {
-    public static void DisplayFlights(List<Flight> flights)
+    public void DisplayFlights(List<Flight> flights)
     {
         Console.WriteLine($"Available flights: ");
 
@@ -16,12 +16,12 @@ public class FlightPrinter
         }
     }
 
-    public static string GetFlightDetails(Flight flight)
+    public string GetFlightDetails(Flight flight)
     {
         return flight.ToString() + '\n' + GetFlightClassesAndPrices(flight);
     }   
 
-    public static string GetFlightClassesAndPrices(Flight flight)
+    public string GetFlightClassesAndPrices(Flight flight)
     {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.AppendLine("Available classes: ");
