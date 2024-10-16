@@ -22,5 +22,5 @@ public interface IFlightRepository
         Class? flightClass = null
         );
     public List<Flight> GetFlights();
-    public void LoadFlights(string? path = null);
+    public List<Flight> LoadFlights(string? path = null);
 }

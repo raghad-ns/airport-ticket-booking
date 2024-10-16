@@ -83,7 +83,7 @@ public class FlightRepository: IFlightRepository
         return Flights;
     }
 
-    public void LoadFlights(string? path = null)
+    public List<Flight> LoadFlights(string? path = null)
     {
         // Assign this value if path is null
         path ??= AppSettingsInitializer.AppSettingsInstance().FlightsRepoPath;
@@ -111,6 +111,7 @@ public class FlightRepository: IFlightRepository
 
             Console.WriteLine($"Flight holding the id: {DeserializedFlightData.id} uploaded successfully!");
         }
+        return Flights;
     }
 
     public static void AddFlightToFile(Flight flight)

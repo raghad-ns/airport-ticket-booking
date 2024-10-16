@@ -24,10 +24,10 @@ public class FlightValidatorTests
     }
 
     [Theory]
-    [InlineData(1, true)]
-    [InlineData(3089799, true)]
-    [InlineData(4234, true)]
-    public void ValidateId_ReturnTrue(int id, bool expectedResult)
+    [InlineData(1)]
+    [InlineData(3089799)]
+    [InlineData(4234)]
+    public void ValidateId_ReturnTrue(int id)
     {
         // Arrange
         // Done
@@ -36,14 +36,14 @@ public class FlightValidatorTests
         bool idValidation = _validator.validateId(id);
 
         // Assert
-        idValidation.Should().Be(expectedResult);
+        idValidation.Should().BeTrue();
     }
 
     [Theory]
-    [InlineData(-5, false)]
-    [InlineData(-43248, false)]
-    [InlineData(-747382, false)]
-    public void ValidateId_ReturnFalse(int id, bool expectedResult)
+    [InlineData(-5)]
+    [InlineData(-43248)]
+    [InlineData(-747382)]
+    public void ValidateId_ReturnFalse(int id)
     {
         // Arrange
         // Done
@@ -52,11 +52,11 @@ public class FlightValidatorTests
         bool idValidation = _validator.validateId(id);
 
         // Assert
-        idValidation.Should().Be(expectedResult);
+        idValidation.Should().BeFalse();
     }
 
     [Fact]
-    public void ValidateAirport_ReturnTrue_ExistedAirport()
+    public void ValidateAirport_ReturnTrue_WhenExistedAirport()
     {
         // Arrange
         string airport = "QueenAliaInternationalAirport";
@@ -69,7 +69,7 @@ public class FlightValidatorTests
     }
 
     [Fact]
-    public void ValidateAirport_ReturnFalse_NotExistedAirport()
+    public void ValidateAirport_ReturnFalse_WhenNotExistedAirport()
     {
         // Arrange
         string airport = "CairoAirport";
@@ -82,7 +82,7 @@ public class FlightValidatorTests
     }
 
     [Fact]
-    public void ValidateCountry_ReturnTrue_ExistedCountry()
+    public void ValidateCountry_ReturnTrue_WhenExistedCountry()
     {
         // Arrange
         var country = "Palestine";
@@ -95,7 +95,7 @@ public class FlightValidatorTests
     }
 
     [Fact]
-    public void ValidateCountryReturnFalse_NotExistedCountry()
+    public void ValidateCountryReturnFalse_WhenNotExistedCountry()
     {
         // Arrange
         var country = "London";
@@ -108,7 +108,7 @@ public class FlightValidatorTests
     }
 
     [Fact]
-    public void ValidateFlightClass_ReturnTrue_ExistedClass()
+    public void ValidateFlightClass_ReturnTrue_WhenExistedClass()
     {
         // Arrange
         var flightClass = new Dictionary<string, double> { { "Economy", 2500.5 } };
@@ -121,7 +121,7 @@ public class FlightValidatorTests
     }
 
     [Fact]
-    public void ValidateFlightClass_ReturnFalse_NotExistedClass()
+    public void ValidateFlightClass_ReturnFalse_WhenNotExistedClass()
     {
         // Arrange
         var flightClass = new Dictionary<string, double> { { "Luxury", 7000 } };
@@ -137,7 +137,7 @@ public class FlightValidatorTests
     [InlineData(3)]
     [InlineData(40)]
     [InlineData(23)]
-    public void ValidateDepartureDate_ReturnTrue_FutureDate(int days)
+    public void ValidateDepartureDate_ReturnTrue_WhenPassingFutureDate(int days)
     {
         // Arrange
         var departureDate = DateTime.Now.AddDays(days);
@@ -153,7 +153,7 @@ public class FlightValidatorTests
     [InlineData(-3)]
     [InlineData(-40)]
     [InlineData(-23)]
-    public void ValidateDepartureDate_ReturnFalse_PastDate(int days)
+    public void ValidateDepartureDate_ReturnFalse_WhenPassingPastDate(int days)
     {
         // Arrange
         var departureDate = DateTime.Now.AddDays(days);
@@ -166,7 +166,7 @@ public class FlightValidatorTests
     }
 
     [Fact]
-    public void IdDuplication_ReturnFalse_IdAlreadyExisted()
+    public void IdDuplication_ReturnFalse_WhenIdAlreadyExisted()
     {
         // Arrange
         var flight = _fixture.Freeze<Flight>();
@@ -195,7 +195,7 @@ public class FlightValidatorTests
     }
 
     [Fact]
-    public void ValidateAllProperties_ReturnsEmptyString_AllPropertiesAreValid()
+    public void ValidateAllProperties_ReturnsEmptyString_WhenAllPropertiesAreValid()
     {
         // Arrange
         var flightDetails = new FlightSerialization(

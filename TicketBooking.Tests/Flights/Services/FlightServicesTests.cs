@@ -27,16 +27,21 @@ public class FlightServicesTests
     }
 
     [Fact]
-    public void LoadFlights_ShouldCallRepositoryMethod()
+    public void LoadFlights_ShouldLoadFlightsFromCSVFileAndReturnFlightsList()
     {
         // Arrange
         var path = "C:\\Users\\M.T\\Desktop\\projects\\foothill\\practice-projects\\AirportTicketBooking\\TicketBooking\\Flights\\Repository\\Flights.csv";
+        var flightsList = _fixture.CreateMany<Flight>().ToList();
+
+        _flightRepositoryMock
+            .Setup(repo =>repo.LoadFlights(It.IsAny<string>()))
+            .Returns(flightsList);
 
         // Act
-        _flightService.LoadFlights(path);
+        var flights = _flightService.LoadFlights(path);
 
         // Assert
-        _flightRepositoryMock.Verify(repo => repo.LoadFlights(It.IsAny<string>()), "FlightRepository.LoadFlights should be called exactly once");
+        flights.Should().BeEquivalentTo(flightsList);
     }
 
     [Fact]
@@ -51,6 +56,7 @@ public class FlightServicesTests
         var arrivalAirport = _fixture.Create<Airport>().ToString();
         var flightClass = _fixture.Create<Class>();
         var flightsList = _fixture.CreateMany<Flight>().ToList();
+        
         _flightRepositoryMock
             .Setup(repo =>
             repo.FilterFlights(
@@ -77,6 +83,7 @@ public class FlightServicesTests
         // Assert
         filteredFlights.Should().BeEquivalentTo(flightsList);
     }
+
     [Fact]
     public void FilterFlights_ShouldReturnEmptyList_FiltersMismatch()
     {
@@ -88,6 +95,7 @@ public class FlightServicesTests
         var departureAirport = _fixture.Create<Airport>().ToString();
         var arrivalAirport = _fixture.Create<Airport>().ToString();
         var flightClass = _fixture.Create<Class>();
+
         _flightRepositoryMock
             .Setup(repo =>
             repo.FilterFlights(

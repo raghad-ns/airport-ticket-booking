@@ -39,9 +39,9 @@ public class FlightServices: IFlightService
             );
     }
 
-    public void LoadFlights(string path)
+    public List<Flight> LoadFlights(string path)
     {
-        _flightRepository.LoadFlights(path);
+        return _flightRepository.LoadFlights(path);
     }
 
     public void DisplayFlights()

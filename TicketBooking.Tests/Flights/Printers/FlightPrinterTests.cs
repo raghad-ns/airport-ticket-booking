@@ -21,7 +21,6 @@ public class FlightPrinterTests
         _flight.Class = new Dictionary<Class, double> {
             { (Class)Enum.Parse(typeof(Class), "Economy"), 2500.5 }
         };
-
     }
 
     [Fact]

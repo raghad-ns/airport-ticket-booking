@@ -15,10 +15,9 @@ public interface IFlightService
         string? arrivalAirport = null,
         Class? flightClass = null
         );
-    void LoadFlights(string path);
+    List<Flight> LoadFlights(string path);
     void DisplayFlights();
     List<Flight> GetFlights();
     string GetFlightClassesAndPricesForDisplay(Flight flight);
     string GetFlightDetailsForDisplay(Flight flight);
-    //Flight GetFlightObject(FlightSerialization flight);
 }
